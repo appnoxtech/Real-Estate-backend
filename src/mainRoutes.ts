@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import userRoutes from './modules/users/routes/userRoutes'
 import propertyRoutes from './modules/properties/routes/propRoutes'
-import chatroomRoutes from './modules/chat/routes/routes'
+import chatroomRoutes from './modules/chat/routes/chat'
 
 const mainRouter = Router()
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { ChatroomController } from "../../controller/chatRoomController"; 
-import { Validation } from "../../../../middleware/authValidator";
-import { logger } from "../../../../utils/logger";
+import { ChatroomController } from "../controller/chatRoomController"; 
+import { Validation } from "../../../middleware/authValidator";
+import { logger } from "../../../utils/logger";
 
 
 class MainRouter {

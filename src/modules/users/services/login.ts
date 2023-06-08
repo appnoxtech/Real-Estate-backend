@@ -16,26 +16,23 @@ export class Login {
         try {
             // Get user input
             const { phoneNumber, password } = req.body;
-
-            // Validate if user exist in our databas
-
+            
             // const user = await User.findOne({ username:username });
             const user = await User.findOne({where:{ phoneNumber:phoneNumber}});
             if (!user) {
                 throw new Exception(ERROR_TYPE.BAD_REQUEST, 'enter valid phoneNumber')
                 
             }
+            if(user?.dataValues?.isPhoneVerified !== true){
+                throw new Exception(ERROR_TYPE.NOT_ALLOWED, 'Please verify your phone-Number first.')
+            }
   
             const pwd = await bcrypt.compare(password, user?.dataValues.password);
 
-            
             // Validate user input
             if(!pwd){
                 throw new Exception(ERROR_TYPE.NOT_FOUND,'password not match')
             }
-
-            // let roleId = user?.roleId
-            // let userRole = await siteExternalCommInstance.userRoleGet(roleId)
             
             if (user && (await password, user.dataValues.password)) {
                 // Create token
@@ -50,7 +47,7 @@ export class Login {
                 // save user token
                 user.dataValues.token = token;
                 const userupdated = await User.update({ token: user.dataValues.token },{where:{ phoneNumber:phoneNumber}});
-                // user.roleName = userRole
+              
                 return Promise.resolve(user)
             }
             

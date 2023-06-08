@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import { ChatroomService } from "../service/chatservice"; 
+import { FileUploadService } from "../services/uploadService";
 import { respHndlr} from "../../../utils/index"
 import { RESPONSE_STATUS } from "../../../utils/constants";
 
-const ChatroomServiceInstance = new ChatroomService()
+const FileUploadServiceInstance = new FileUploadService()
 
-export class ChatroomController {
+export class FileUploadController {
 
-    async createChatrooms(req: Request, res: Response, next: NextFunction) {
+    async fileupload(req: Request, res: Response) {
         try {
-            const data = await ChatroomServiceInstance.createChatRoom(req,res);
+            const data = await FileUploadServiceInstance.DocumentUpload(req);
             respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS_CREATED);
         } catch (err: any) {
             respHndlr.sendError(res, err);

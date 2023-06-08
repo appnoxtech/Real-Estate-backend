@@ -17,6 +17,7 @@ module.exports = {
         role: 'admin',
         password: 'appnox.ai',
         phoneNumber: '9452340523',
+        isPhoneVerified:true,
         seeder: true,
       };
       req['body'] = body;

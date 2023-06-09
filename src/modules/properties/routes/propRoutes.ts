@@ -18,16 +18,16 @@ class MainRouter {
 
     propertyRouters() {
         try{
-        this.router.route(`/api/v1/create`)
+        this.router.route(`/api/v1/property/create`)
             .post(this.property.createProperty)
-        this.router.route(`/api/v1/update/:id`)
-            .patch(this.validation.checkValidation,this.property.updateProperty)
-        this.router.route(`/api/v1/delete/:id`)
-            .delete(this.validation.checkValidation,this.property.deleteProperty)
-        this.router.route(`/api/v1/:propertyId`)
-            .get(this.validation.checkValidation,this.property.getPropertyById)
+        this.router.route(`/api/v1/property/update/:id`)
+            .patch(this.property.updateProperty)
+        this.router.route(`/api/v1/property/delete/:id`)
+            .delete(this.property.deleteProperty)
+        this.router.route(`/api/v1/property/:propertyId`)
+            .get(this.property.getPropertyById)
             this.router.route(`/api/v1/properties`)
-            .get(this.validation.checkValidation,this.property.getAllProperties)
+            .get(this.property.getAllProperties)
         }catch(err:any){
             logger.error("error occur in access routes",err)
         }

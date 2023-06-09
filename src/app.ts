@@ -5,7 +5,7 @@ import { Server, Socket } from 'socket.io';
 import { socketHandler } from './utils/socketHandler';
 
 // Normalize port number which will expose server
-const port = normalizePort(3000);
+const port = normalizePort(8082);
 
 // Instantiate the expressServer class
 const expressInstance = new expressServer().expressInstance;
@@ -18,7 +18,7 @@ const server = http.createServer(expressInstance);
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:8082',
     methods: ['GET', 'POST'],
   },
 });

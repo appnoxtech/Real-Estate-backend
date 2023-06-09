@@ -18,11 +18,11 @@ class MainRouter {
 
     userRouters() {
         try{
-        this.router.route(`/api/v1/create`)
+        this.router.route(`/api/v1/user/create`)
             .post(this.user.createUser)
-        this.router.route(`/api/v1/update/:id`)
+        this.router.route(`/api/v1/user/update/:id`)
             .patch(this.validation.checkValidation,this.user.updateUser)
-        this.router.route(`/api/v1/delete/:id`)
+        this.router.route(`/api/v1/user/delete/:id`)
             .delete(this.user.deleteUser)
         this.router.route(`/api/v1/user/:userId`)
             .get(this.user.getUserById)

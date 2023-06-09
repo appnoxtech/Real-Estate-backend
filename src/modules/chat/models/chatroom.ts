@@ -7,6 +7,12 @@ const databaseInstance = database;
 
 // Sequelize Model
 const Chatroom = databaseInstance.define('chatrooms', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: UUIDV4,
+    primaryKey: true,
+    allowNull: false,
+  },
   userId: {
         type: DataTypes.STRING,
         allowNull: true,

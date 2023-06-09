@@ -16,9 +16,10 @@ export class Login {
         try {
             // Get user input
             const { phoneNumber, password } = req.body;
-            
+            console.log("password---",password)
             // const user = await User.findOne({ username:username });
             const user = await User.findOne({where:{ phoneNumber:phoneNumber}});
+            console.log("0998765>>>>>>",user?.dataValues.password)
             if (!user) {
                 throw new Exception(ERROR_TYPE.BAD_REQUEST, 'enter valid phoneNumber')
                 
@@ -28,7 +29,7 @@ export class Login {
             }
   
             const pwd = await bcrypt.compare(password, user?.dataValues.password);
-
+            console.log("pwd------->>>>",pwd)
             // Validate user input
             if(!pwd){
                 throw new Exception(ERROR_TYPE.NOT_FOUND,'password not match')

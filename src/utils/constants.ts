@@ -36,7 +36,8 @@ export const ERROR_TYPE ={
     ALREADY_EXISTS: 'AlreadyExistsError',
     NOT_ALLOWED: 'MethodNotAllowedError',
     PCP_CONSTRAINT: 'PcpConstraintError',
-    INVALID_INPUT: 'invalid input'
+    INVALID_INPUT: 'invalid input',
+    TOKEN_NOT:'authorization token not found'
 
   }
 

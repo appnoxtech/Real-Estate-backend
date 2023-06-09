@@ -6,6 +6,12 @@ module.exports = {
     try{
       queryInterface.createTable('chatroom',
        {
+        id: {
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUIDV4,
+          primaryKey: true,
+          allowNull: false,
+        },
         userId: {
           type: Sequelize.STRING,
           allowNull: true,

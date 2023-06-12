@@ -5,7 +5,7 @@ import { Server, Socket } from 'socket.io';
 import { socketHandler } from './utils/socketHandler';
 
 // Normalize port number which will expose server
-const port = normalizePort(8082);
+const port = normalizePort(5000);
 
 // Instantiate the expressServer class
 const expressInstance = new expressServer().expressInstance;

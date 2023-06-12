@@ -1,9 +1,9 @@
 {
   "local": {
-    "username": "admin",
-    "password": "appnox.ai",
-    "database": "my_db",
-    "host": "database-1.c0sppty9yvmg.ap-south-1.rds.amazonaws.com",
+    "username": "root",
+    "password": "manjari@19",
+    "database": "realEstate",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {

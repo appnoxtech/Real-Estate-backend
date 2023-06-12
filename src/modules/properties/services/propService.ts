@@ -33,6 +33,10 @@ export class PropertyService {
   async registerProperty(req: any, res: any) {
     try {
       const {title}= req.body
+      let titleReq = title.trim();
+      if (titleReq === "" || titleReq === null || titleReq === undefined) {
+        throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Title required');
+      }
 
       const alreadyExist =  await Properties.findOne({where:{title:title}})
 
@@ -52,14 +56,14 @@ export class PropertyService {
       const title= req.body?.title
       const id = req.params.id
 
-      const alreadyExist =  await Properties.findOne({where:{title:title}})
+      const Exist =  await Properties.findOne({where:{id:id}})
 
-      if(!alreadyExist){
+      if(!Exist){
         throw new Exception(ERROR_TYPE.NOT_FOUND,'property not exist, So we can not update the property details ')
 
       }
-      const propertyCreate = await Properties.update(req.body,{where:{id:id}})
-      return Promise.resolve(propertyCreate);
+      const propertyUpdated = await Properties.update(req.body,{where:{id:id}})
+      return Promise.resolve(propertyUpdated);
     } catch (err: any) {
       return Promise.reject(err);
     }

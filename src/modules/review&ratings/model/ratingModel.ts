@@ -6,24 +6,36 @@ import { UUID, UUIDV4, STRING, DATE } from 'sequelize';
 const databaseInstance = database;
 
 // Sequelize Model
-const Message = databaseInstance.define('messages', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: UUIDV4,
-    primaryKey: true,
-    allowNull: false,
-  },
-  chatRoomId: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  userId: {
-        type: DataTypes.STRING,
-        allowNull: true,
+const Ratings = databaseInstance.define('ratings', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
+        primaryKey: true,
+        allowNull: false,
       },
-  message: {
-        type: DataTypes.STRING,
-        allowNull: true,
+      userId: {
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      propertyId: {
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      userName: {
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      propertyName: {
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      ratings: {
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      reviews: {
+        type:DataTypes.STRING,
+        allowNull:true
       },
   // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
   createdAt: {
@@ -50,4 +62,4 @@ const Message = databaseInstance.define('messages', {
 //   paranoid: true,
 });
 
-export default Message;
+export default Ratings;

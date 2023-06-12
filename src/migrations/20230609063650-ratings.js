@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     try{
-      queryInterface.createTable('messages',
+      queryInterface.createTable('ratings',
        {
         id: {
           type: Sequelize.UUID,
@@ -12,16 +12,29 @@ module.exports = {
           primaryKey: true,
           allowNull: false,
         },
-        chatRoomId: {
-          type: Sequelize.STRING,
-          allowNull: true,
-        },
         userId: {
-          type: Sequelize.STRING,
-          allowNull: true,
+          type:Sequelize.STRING,
+          allowNull:false
         },
-        message: {
-          type: Sequelize.STRING
+        propertyId: {
+          type:Sequelize.STRING,
+          allowNull:false
+        },
+        userName: {
+          type:Sequelize.STRING,
+          allowNull:false
+        },
+        propertyName: {
+          type:Sequelize.STRING,
+          allowNull:false
+        },
+        ratings: {
+          type:Sequelize.STRING,
+          allowNull:false
+        },
+        reviews: {
+          type:Sequelize.STRING,
+          allowNull:true
         },
         // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
         createdAt: {
@@ -43,11 +56,11 @@ module.exports = {
          )
      }catch(error)
      {
-       console.log("error at 20230607093648-messages.js",error)
+       console.log("error at 20230609063650-ratings.js",error)
      }
    },
  
    async down (queryInterface, Sequelize) {
-      await queryInterface.dropTable('messages');
+      await queryInterface.dropTable('ratings');
    }
 };

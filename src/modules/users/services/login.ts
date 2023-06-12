@@ -16,7 +16,7 @@ export class Login {
         try {
             // Get user input
             const { phoneNumber, password } = req.body;
-            
+            let passwordReq = password.trim();
             // const user = await User.findOne({ username:username });
             const user = await User.findOne({where:{ phoneNumber:phoneNumber}});
             if (!user) {
@@ -26,9 +26,12 @@ export class Login {
             if(user?.dataValues?.isPhoneVerified !== true){
                 throw new Exception(ERROR_TYPE.NOT_ALLOWED, 'Please verify your phone-Number first.')
             }
+
+            if (passwordReq === "" || passwordReq === null || passwordReq === undefined) {
+                throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Password requires');
+              }
   
             const pwd = await bcrypt.compare(password, user?.dataValues.password);
-
             // Validate user input
             if(!pwd){
                 throw new Exception(ERROR_TYPE.NOT_FOUND,'password not match')
@@ -60,6 +63,10 @@ export class Login {
     async logout(req: any, res: any) {
         try {
           const { phoneNumber } = req.body;
+          const result = await User.findOne({ where: { phoneNumber: phoneNumber } });
+          if (!result) {
+          throw new Exception(ERROR_TYPE.NOT_FOUND, 'phone-Number not found.')
+          }
           await User.update({ token: null }, { where: { phoneNumber: phoneNumber } });
           return Promise.resolve('Logout successfully.')
         } catch (err) {

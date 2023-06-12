@@ -38,12 +38,10 @@ import { respHndlr } from "../utils";
                if (!tokenObject) {
                 throw new Exception(ERROR_TYPE.NOT_FOUND,'Invalid Token')
            }
-           respHndlr.sendSuccess(res,RESPONSE_STATUS.SUCCESS);
+           return next()
              }
         } catch (err) {
             respHndlr.sendError(res, err);
-
-
         }
     }
 

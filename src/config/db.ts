@@ -1,50 +1,53 @@
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
-import sequelize, { Sequelize } from 'sequelize'
-import dotenv from 'dotenv'
-const Umzug = require('umzug');
-import path from 'path'
-import { logger } from '../utils/logger';
 
-dotenv.config()
+dotenv.config();
 
 class Database {
-  db: string
-  user: string
-  password: string
-  host: string
-  // port: number
-  maxPool: number
-  minPool: number
-  database: sequelize.Sequelize
+  db: string;
+  user: string;
+  password: string;
+  host: string;
+  port: number;
+  maxPool: number;
+  minPool: number;
+  database: Sequelize;
 
   constructor() {
-    this.db = process.env.DB_NAME || 'realEstate'
-    this.user = process.env.DB_USER || 'root'
-    this.password = process.env.DB_PASS || 'manjari@19'
-    this.host = process.env.DB_HOST || '127.0.0.1'
-    // this.port = Number(process.env.DB_PORT) || 8082
-    this.maxPool = Number(process.env.MAX_POOL) || 100
-    this.minPool = Number(process.env.MIN_POOL) || 1
+    this.db = process.env.DB_NAME || 'my_db';
+    this.user = process.env.DB_USER || 'admin';
+    this.password = process.env.DB_PASS || 'appnox.ai';
+    this.host = process.env.DB_HOST || 'database-1.c0sppty9yvmg.ap-south-1.rds.amazonaws.com';
+    this.port = Number(process.env.DB_PORT) || 3306;
+    this.maxPool = Number(process.env.MAX_POOL) || 100;
+    this.minPool = Number(process.env.MIN_POOL) || 1;
 
-    this.database = new Sequelize(this.db, this.user, this.password, {
+    this.database = new Sequelize({
+      database: this.db,
+      username: this.user,
+      password: this.password,
       host: this.host,
+      port: this.port,
       ssl: true,
       dialect: 'mysql',
       dialectOptions: {
-        encrypt: true,
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
       },
-      // port: this.port,
       logging: false,
-      // operatorsAliases: false,
       pool: {
         max: this.maxPool,
         min: this.minPool,
         acquire: 100000,
         idle: 50000,
       },
-    })
+    });
   }
 }
-let databaseInstance = new Database().database
 
-export default databaseInstance
+const databaseInstance = new Database().database;
+
+export default databaseInstance;

@@ -18,9 +18,6 @@ class Server {
     // Setup requests gZip compression
     this.expressInstance.use(compression());
 
-    // Setup common security protection
-    //this.expressInstance.use(helmet());
-
     // Setup Cross Origin access
     this.expressInstance.use(cors());
 

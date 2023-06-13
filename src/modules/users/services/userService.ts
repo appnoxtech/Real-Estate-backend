@@ -202,6 +202,9 @@ export class UserService {
     try {
       // Destructuring
       const { phoneNumber, otp, type } = req.body;
+      if(!phoneNumber){
+        throw new Exception(ERROR_TYPE.NOT_FOUND,"please provide phoneNumber")
+      }
   
       if (type == CommonStrings.GENERATE) {
         const otp = await this.sendOtpService(phoneNumber);
@@ -209,11 +212,12 @@ export class UserService {
         return Promise.resolve('otp send successfully.')
       } else {
         // Verify OTP
-        await this.verifyOtpService(phoneNumber, otp);
+      
+       const verify =  await this.verifyOtpService(phoneNumber, otp);
         return Promise.resolve('otp verified successfully')
       }
     } catch (err: any) {
-      next(err);
+      return Promise.reject(err);
     }
   };
 
@@ -244,10 +248,14 @@ export class UserService {
  
   async verifyOtpService(phoneNumber:any, otp:any){
     try {
+      if(!otp){
+        throw new Exception(ERROR_TYPE.BAD_REQUEST,'please provide otp for verification')
+      }
       const userExist = await User.findOne({
         where: { phoneNumber: phoneNumber },
       });
-      if (!userExist) {
+     
+      if(userExist == null || userExist == undefined) {
         throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account not exists with this phone-number.');
       }
       const verifyOtp = await Otp.findOne({

@@ -15,7 +15,7 @@ const Properties = databaseInstance.define('properties', {
   },
   title: {
     type:DataTypes.STRING,
-    allowNull:true
+    allowNull:false
   },
   type: {
     type:DataTypes.ENUM,
@@ -25,7 +25,7 @@ const Properties = databaseInstance.define('properties', {
   },
    description: {
      type: DataTypes.STRING,
-     allowNull: false,
+     allowNull: true,
    },
    images: {
      type: DataTypes.STRING,
@@ -57,7 +57,7 @@ const Properties = databaseInstance.define('properties', {
    },
    owner_identity:{
      type: DataTypes.STRING,
-     allowNull: true,
+     allowNull: false,
    },
    status: {
     type:DataTypes.ENUM,

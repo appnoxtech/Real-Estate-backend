@@ -1,17 +1,18 @@
 import Message from "../modules/chat/models/Message";
 import User from "../modules/users/model/userModel";
+import { logger } from "./logger";
 export const socketHandler = (io: any) => {
   io.on("connection", (socket: any) => {
-    console.log("Connected: ");
+    logger.info("Connected: ");
 
     socket.on("disconnect", () => {
-      console.log("Disconnected: ");
+      logger.info("Disconnected: ");
     });
 
     socket.on(
       "chatroomMessage",
       async ({ chatroomId, userId, message }: any) => {
-        console.log("message:-", message, "chatRoomId:-", chatroomId, userId);
+        logger.info("message:-", message, "chatRoomId:-", chatroomId, userId);
         if (message?.trim().length > 0) {
           const user = await User.findOne({ where: { id: userId } });
           if (user) {

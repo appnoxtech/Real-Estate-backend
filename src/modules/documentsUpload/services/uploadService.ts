@@ -11,7 +11,7 @@ dotenv.config();
 const AWS_ACCESS_KEY_ID: string | undefined = process.env.AWS_ACCESS_KEY_ID;
 const AWS_SECRET_ACCESS_KEY: string | undefined = process.env.AWS_SECRET_ACCESS_KEY;
 const AWS_REGION: string | undefined = process.env.AWS_REGION
-console.log("-------------",AWS_REGION,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY)
+
 if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY || !AWS_REGION) {
   throw new Error('Missing AWS configuration. Please check your environment variables.');
 }

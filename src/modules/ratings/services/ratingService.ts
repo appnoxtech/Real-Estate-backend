@@ -82,8 +82,9 @@ export class RatingsService {
   
   async updateRatings(req: any) {
     try {
+      console.log("ffhsgdjh",req.body)
       const propertyId= req.params?.propertyId
-      const userId = req.body?.userId
+      const userId = req.params?.userId
 
       const Exist =  await Ratings.findOne({where:{propertyId:propertyId,userId:userId}})
 

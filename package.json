@@ -8,6 +8,7 @@
     "start": "node app.js",
     "server": "nodemon build/app.js",
     "dev-server": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./build/app.js\""
+    
   },
   "author": "appnox.ai",
   "license": "ISC",

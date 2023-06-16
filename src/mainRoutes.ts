@@ -3,7 +3,7 @@ import userRoutes from './modules/users/routes/userRoutes';
 import propertyRoutes from './modules/properties/routes/propRoutes';
 import chatroomRoutes from './modules/chat/routes/chat';
 import fileUploadRoutes from './modules/documentsUpload/routes/documentsUpload';
-import ratingRoutes from './modules/review&ratings/routes/ratingRoutes'
+import ratingRoutes from './modules/ratings/routes/ratingRoutes'
 
 const mainRouter = Router()
 

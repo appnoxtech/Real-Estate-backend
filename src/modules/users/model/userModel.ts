@@ -44,8 +44,9 @@ const User = databaseInstance.define('users', {
   role: {
     type:DataTypes.ENUM,
     allowNull: false,
-    values: ['admin','landlord','tenant'],
+    values: ['admin','owner','tenant','broker','buyer'],
     defaultValue: 'tenant',
+
   },
   // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
   createdAt: {

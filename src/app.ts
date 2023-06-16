@@ -12,7 +12,9 @@ const expressInstance = new expressServer().expressInstance;
 
 // Make port available within server
 expressInstance.set("port", port);
-
+expressInstance.get('/', (req, res) => {
+  res.send('API Running');
+});
 // Create the HTTP Express Server
 const server = http.createServer(expressInstance);
 

@@ -13,7 +13,7 @@ module.exports = {
       },
       title: {
        type:Sequelize.STRING,
-       allowNull:false
+       allowNull:true
      },
      type: {
       type:Sequelize.ENUM,
@@ -23,7 +23,7 @@ module.exports = {
     },
       description: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       images: {
         type: Sequelize.STRING,
@@ -55,7 +55,7 @@ module.exports = {
       },
       owner_identity:{
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       status: {
        type:Sequelize.ENUM,
@@ -86,3 +86,4 @@ module.exports = {
     await queryInterface.dropTable('properties');
   }
 };
+

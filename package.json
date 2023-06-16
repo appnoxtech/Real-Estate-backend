@@ -1,5 +1,5 @@
 {
-  "name": "boiler_plate",
+  "name": "real_estate_app",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,6 +8,7 @@
     "start": "node app.js",
     "server": "nodemon build/app.js",
     "dev-server": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./build/app.js\""
+    
   },
   "author": "appnox.ai",
   "license": "ISC",

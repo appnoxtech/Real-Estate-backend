@@ -268,7 +268,6 @@ export class UserService {
       latitude:address?.dataValues.latitude,
       longitude:address?.dataValues.longitude
    }
-   console.log(resObj)
       // Promise Resolved
       return Promise.resolve(resObj);
   }catch(error:any){

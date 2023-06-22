@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     try{
-      queryInterface.createTable('otps',
+      queryInterface.createTable('push_notification_token',
        {
         id: {
           type: Sequelize.UUID,
@@ -12,13 +12,18 @@ module.exports = {
           defaultValue: Sequelize.UUIDV4,
           allowNull: false,
         },
-        phoneNumber: {
+        userId: {
           type:Sequelize.STRING,
           allowNull:false
         },
-        otp:{
+        notificationToken:{
           type: Sequelize.INTEGER,
           allowNull: true,
+        },
+        status: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          defaultValue: 1
         },
         // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
         createdAt: {
@@ -40,7 +45,7 @@ module.exports = {
          )
      }catch(error)
      {
-       console.log("error at 20230605112122-otp.js",error)
+       console.log("error at 20230613072716-push_notification_token.js",error)
      }
    },
  

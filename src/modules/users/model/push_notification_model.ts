@@ -6,20 +6,25 @@ import { UUID, UUIDV4, STRING, DATE } from 'sequelize';
 const databaseInstance = database;
 
 // Sequelize Model
-const Otp = databaseInstance.define('otps', {
+const PushNotification = databaseInstance.define('push_notification_token', {
     id: {
         type: DataTypes.UUID,
         defaultValue: UUIDV4,
         primaryKey: true,
         allowNull: false,
       },
-      phoneNumber: {
+    userId: {
         type:DataTypes.STRING,
         allowNull:false
       },
-      otp:{
+    notificationToken:{
         type: DataTypes.INTEGER,
         allowNull: true,
+      },
+    status: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1
       },
   // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
   createdAt: {
@@ -46,4 +51,4 @@ const Otp = databaseInstance.define('otps', {
 //   paranoid: true,
 });
 
-export default Otp;
+export default PushNotification;

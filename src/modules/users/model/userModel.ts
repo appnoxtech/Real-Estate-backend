@@ -25,10 +25,6 @@ const User = databaseInstance.define('users', {
     type:DataTypes.STRING,
     allowNull: true,
   },
-  password: {
-    type:DataTypes.STRING,
-    allowNull: false,
-  },
   phoneNumber: {
     type:DataTypes.STRING,
     allowNull: false,

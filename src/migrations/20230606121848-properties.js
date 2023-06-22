@@ -13,7 +13,7 @@ module.exports = {
       },
       title: {
        type:Sequelize.STRING,
-       allowNull:true
+       allowNull:false
      },
      type: {
       type:Sequelize.ENUM,
@@ -23,7 +23,7 @@ module.exports = {
     },
       description: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       images: {
         type: Sequelize.STRING,
@@ -55,7 +55,7 @@ module.exports = {
       },
       owner_identity:{
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       status: {
        type:Sequelize.ENUM,

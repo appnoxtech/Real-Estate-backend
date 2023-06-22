@@ -22,11 +22,7 @@ module.exports = {
          profilePhoto: {
            type: Sequelize.STRING,
            allowNull: true,
-         },
-         password: {
-           type: Sequelize.STRING,
-           allowNull: false,
-         },  
+         }, 
          phoneNumber: {
            type: Sequelize.STRING,
            allowNull: false,
@@ -42,7 +38,7 @@ module.exports = {
          role: {
           type:Sequelize.ENUM,
           allowNull: false,
-          values: ['admin','landlord','tenant'],
+          values: ['admin','owner','tenant','broker','buyer'],
           defaultValue: 'tenant',
         },
          // createdAt, lastUpdatedAt and deletedAt managed by Sequelize

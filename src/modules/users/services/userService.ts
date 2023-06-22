@@ -4,18 +4,14 @@ import bcrypt from "bcryptjs";
 import User from "../model/userModel";
 import Exception from "../../../exceptions/exception";
 import { paginator } from "../../../utils/pagination";
-import axios from "axios";
-//import emailValidator from "email-validator";
+const TOKEN_KEY = 'realEstate'
 const emailValidator = require('email-validator');
-//import { addTokenService } from "./tokenService";
-//import { sendOtpService, updatePasswordAndUsernameService, verifyEmail, verifyLoginServices, verifyOldPasswordServices, verifyOtpService } from "./accessUser";
 import { CommonStrings, ERROR_TYPE } from "../../../utils/constants";
 import { logger } from "../../../utils/logger";
 import { sendMessage } from "../../../utils/awsServices/awsService";
 import Otp from "../model/otpModel";
-
-
-const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
+import jwt from 'jsonwebtoken';
+import Address from "../model/addresses";
 
 export class UserService {
   async getUserById(req: any) {
@@ -35,7 +31,7 @@ export class UserService {
     try {
         const password = req.body.password;
         const phoneNumber = req.body.phoneNumber;
-        const email = req.body.email;
+        const email = req.body?.email;
         const name = req.body.name
         const role = req.body.role
         let passwordReq = password.trim();
@@ -56,9 +52,11 @@ export class UserService {
           throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Please enter name.');
         }
 
-      if (!emailValidator.validate(email)) {
+     if(!email){
+       if (!emailValidator.validate(email)) {
         throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid email');
       }
+    }
 
       const userExist = await User.findOne({
         where: { phoneNumber: phoneNumber },
@@ -147,58 +145,7 @@ export class UserService {
     }
   }
 
-
-  async verifyOldPasswordServices(userId: any, oldPassword: string) {
-    try {
-      const user = await User.findOne({ where: { id: userId } });
-      if (!user) {
-        throw new Error('User not found');
-      }
-  
-      const isMatch = await bcrypt.compare(oldPassword, user.dataValues.password);
-      if (!isMatch) {
-        throw new Error('Invalid old password');
-      }
-  
-      return user;
-    } catch (err) {
-      throw err;
-    }
-  }
-  
-  async updatePasswordAndUsernameService(phoneNumber: string, newPassword: string) {
-    try {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(newPassword, salt);
-  
-      await User.update(
-        { password: hashedPassword },
-        { where: { phoneNumber: phoneNumber } }
-      );
-  
-      // You can also update the username using a similar update query if needed
-  
-      return 'Password updated.';
-    } catch (err) {
-      throw err;
-    }
-  }
-  
-  async changePassword(req: any, res: any, next: any) {
-    try {
-      const {oldPassword, newPassword } = req.body;
-      const userId = req.params.userId
-      const userData = await this.verifyOldPasswordServices(userId, oldPassword);
-     const changedPassword = await this.updatePasswordAndUsernameService(userData?.dataValues.phoneNumber, newPassword);
-      return Promise.resolve(changedPassword)
-    } catch (error:any) {
-      logger.error("Error in change password all users.", error.message);
-      return Promise.reject(error.message);
-    }
-  }
-
-
- async generateOtp(req: any, res: any, next: any){
+  async generateOtp(req: any, res: any, next: any){
     try {
       // Destructuring
       const { phoneNumber, otp, type } = req.body;
@@ -208,13 +155,27 @@ export class UserService {
   
       if (type == CommonStrings.GENERATE) {
         const otp = await this.sendOtpService(phoneNumber);
-  
-        return Promise.resolve('otp send successfully.')
+        const otpValue = otp?.dataValues.otp
+        return Promise.resolve(`otp send successfully:${otpValue}`)
       } else {
         // Verify OTP
       
-       const verify =  await this.verifyOtpService(phoneNumber, otp);
-        return Promise.resolve('otp verified successfully')
+       const verify =  await this.verifyOtpService(phoneNumber, otp,res);
+       if(verify == false){
+        return Promise.resolve("User Not Found with this phone-number")
+       }
+       const resObj = {
+        name:verify?.name,
+        street:verify?.street,
+        country:verify?.country,
+        city:verify?.city,
+        postalCode:verify?.postalCode,
+        state:verify?.state,
+        latitude:verify?.latitude,
+        longitude:verify?.longitude
+     }
+
+        return Promise.resolve(resObj)
       }
     } catch (err: any) {
       return Promise.reject(err);
@@ -223,63 +184,97 @@ export class UserService {
 
  async sendOtpService(phoneNumber:any){
     try {
-      const userExist = await User.findOne({
-        where: { phoneNumber: phoneNumber },
-      });
-      if (!userExist) {
-        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account not exists with this phone-number.');
-      }
+
+        const regex: any = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
+  
+        // const validPhoneNumber = phone(phoneNumber);
+        if (regex.test(phoneNumber) === false) {
+          throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid phone number');
+        }
       // Generating OTP
       const otp = Math.floor(1000 + Math.random() * 9000);
   
       await sendMessage(phoneNumber, otp);
   
       const savingObj = {
-        userId: userExist.dataValues.id,
+        phoneNumber:phoneNumber,
         otp: otp,
       };
-      const otpSave = await Otp.create({userId:userExist.dataValues.id,otp:otp});
+      const userUpdate = await Otp.findOne({where:{phoneNumber:phoneNumber}})
+      if(!userUpdate){
+        const otpSave = await Otp.create({phoneNumber:phoneNumber,otp:otp});
+      }
+      const otpSave = await Otp.update(savingObj,{where:{phoneNumber:phoneNumber}});
+      const otpFind = await Otp.findOne({where:{phoneNumber:phoneNumber}});
       // Promise Resolved
-      return(otpSave);
+      return(otpFind);
     } catch (err) {
       return Promise.reject(err);
     }
   };
  
-  async verifyOtpService(phoneNumber:any, otp:any){
+  async verifyOtpService(phoneNumber:any, otp:any,res:any){
     try {
       if(!otp){
         throw new Exception(ERROR_TYPE.BAD_REQUEST,'please provide otp for verification')
       }
-      const userExist = await User.findOne({
-        where: { phoneNumber: phoneNumber },
-      });
-     
-      if(userExist == null || userExist == undefined) {
-        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account not exists with this phone-number.');
-      }
-      const verifyOtp = await Otp.findOne({
-        where: {
-          userId: userExist.dataValues.id,
-          otp: otp,
-        },
-      });
+      
+        const verifyOtp = await Otp.findOne({
+          where: {
+            phoneNumber:phoneNumber,
+            otp: otp,
+          },
+        });
+    
+        // Matching OTP
+        if (!verifyOtp) {
+          throw new Exception(
+            ERROR_TYPE.BAD_REQUEST,'Otp Is Invalid');
+        }
+
+        const userExist = await User.findOne({
+          where: { phoneNumber: phoneNumber },
+        });
+    
+        if(!userExist) {
+          return false
+        }
+        const address = await Address.findOne({where:{userId:userExist.dataValues.id}})
+        if (userExist && (await otp, userExist.dataValues.otp)) {
+          // Create token
+          const token = jwt.sign(
+              { user_id: userExist.dataValues.id, phoneNumber },
+              TOKEN_KEY,
+              {
+                  expiresIn: "2h",
+              }
+          );
   
-      // Matching OTP
-      if (!verifyOtp) {
-        throw new Exception(
-          ERROR_TYPE.BAD_REQUEST,'Otp Is Invalid');
-      }
-  
-      await User.update({isPhoneVerified: true},{where: {id: userExist.dataValues.id}}
-      );
-  
-      // Promise Resolved
-      return Promise.resolve();
-    } catch (err) {
-      return Promise.reject(err);
+          // save user token
+          userExist.dataValues.token = token;
+          const userupdated = await User.update({ token: userExist.dataValues.token },{where:{ phoneNumber:phoneNumber}});
+    
+          const user =  await User.update({isPhoneVerified: true,token: userExist.dataValues.token},{where: {id: userExist.dataValues.id}});
+     const otps = await Otp.update({otp:null},{where: {phoneNumber:phoneNumber}});
+       
     }
-  };
+    const resObj = {
+      name:userExist?.dataValues.name,
+      street:address?.dataValues.street,
+      country:address?.dataValues.country,
+      city:address?.dataValues.city,
+      postalCode:address?.dataValues.postalCode,
+      state:address?.dataValues.state,
+      latitude:address?.dataValues.latitude,
+      longitude:address?.dataValues.longitude
+   }
+   console.log(resObj)
+      // Promise Resolved
+      return Promise.resolve(resObj);
+  }catch(error:any){
+    return Promise.reject(error)
+  }
+}
   
 }
 

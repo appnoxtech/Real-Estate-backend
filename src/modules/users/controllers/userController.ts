@@ -56,15 +56,6 @@ export class UserController {
         };
     }
 
-    async login(req:Request, res: Response, next:NextFunction   ){
-        try {
-            const data =await loginInstance.login(req,res);
-            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
-        } catch (err: any) {
-            respHndlr.sendError(res, err);
-        };
-    }
-
     async auth(req:Request, res: Response, next:any){
         try {
             const data =await authInstance.verifyToken(req,res,next);
@@ -95,22 +86,4 @@ export class UserController {
 
     }
 
-    async resetPassword(req: Request, res: Response, next: NextFunction) {
-        // try {
-        //     const data =await UserServiceInstance.resetUsernameAndPassword(req,res,next);
-        //     return (data)
-        // } catch (err: any) {
-        //     next(err)
-        // };
-
-    }
-
-    async changePassword(req: Request, res: Response, next: NextFunction) {
-        try {
-            const data = await UserServiceInstance.changePassword(req,res,next);
-            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
-        } catch (err: any) {
-            respHndlr.sendError(res, err);
-        };
-    }
 }

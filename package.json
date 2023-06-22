@@ -8,7 +8,6 @@
     "start": "node app.js",
     "server": "nodemon build/app.js",
     "dev-server": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./build/app.js\""
-    
   },
   "author": "appnox.ai",
   "license": "ISC",
@@ -28,6 +27,7 @@
     "express": "^4.17.2",
     "express-validator": "^6.14.0",
     "file-type": "^16.5.1",
+    "firebase-admin": "^11.9.0",
     "generate-password": "^1.7.0",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^8.5.1",

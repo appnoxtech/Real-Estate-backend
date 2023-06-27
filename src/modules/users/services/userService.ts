@@ -29,58 +29,42 @@ export class UserService {
 
   async registerUser(req: any, res: any) {
     try {
-        const password = req.body.password;
-        const phoneNumber = req.body.phoneNumber;
-        const email = req.body?.email;
-        const name = req.body.name
-        const role = req.body.role
-        let passwordReq = password.trim();
-
-        // Validate phone number format
-        const regex: any = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
+      const password = req.body.password;
+      const phoneNumber = req.body.phoneNumber;
+      const email = req.body?.email;
+      const name = req.body.name;
   
-        // const validPhoneNumber = phone(phoneNumber);
-        if (regex.test(phoneNumber) === false) {
-          throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid phone number');
-        }
-
-        if (passwordReq === "" || passwordReq === null || passwordReq === undefined) {
-          throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid password');
-        }
-
-        if (name === "" || name === null || name === undefined) {
-          throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Please enter name.');
-        }
-
-     if(!email){
-       if (!emailValidator.validate(email)) {
-        throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid email');
+      // Validate phone number format
+      const regex = /^(?:(?:\+|0{0,2})1(\s*[\-]\s*)?)?\(?[2-9]\d{2}\)?[-.\s]?[2-9]\d{2}[-.\s]?\d{4}$/;
+  
+      if (!regex.test(phoneNumber)) {
+        throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid phone number');
       }
-    }
-
+  
+      if (name === "" || name === null || name === undefined) {
+        throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Please enter name.');
+      }
+  
+      if (!email) {
+        if (!emailValidator.validate(email)) {
+          throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid email');
+        }
+      }
+  
       const userExist = await User.findOne({
         where: { phoneNumber: phoneNumber },
       });
       if (userExist) {
-        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account already exists with this phone-number.');
+        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account already exists with this phone number.');
       }
-
-      const userExistwithEmail = await User.findOne({
-        where: {email:email},
-      });
-      if (userExistwithEmail) {
-        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account already exists with this email.');
-      }
-
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      req.body.password = hashedPassword;
+  
       const user = await User.create(req.body);
       return Promise.resolve(user);
     } catch (err: any) {
       return Promise.reject(err);
     }
   }
+  
   
   async updateUser(req: any) {
     try {
@@ -172,7 +156,8 @@ export class UserService {
         postalCode:verify?.postalCode,
         state:verify?.state,
         latitude:verify?.latitude,
-        longitude:verify?.longitude
+        longitude:verify?.longitude,
+        token:verify?.token
      }
 
         return Promise.resolve(resObj)
@@ -240,13 +225,13 @@ export class UserService {
           return false
         }
         const address = await Address.findOne({where:{userId:userExist.dataValues.id}})
-        if (userExist && (await otp, userExist.dataValues.otp)) {
+        if (userExist) {
           // Create token
           const token = jwt.sign(
               { user_id: userExist.dataValues.id, phoneNumber },
               TOKEN_KEY,
               {
-                  expiresIn: "2h",
+                  expiresIn: "365d",
               }
           );
   
@@ -266,7 +251,8 @@ export class UserService {
       postalCode:address?.dataValues.postalCode,
       state:address?.dataValues.state,
       latitude:address?.dataValues.latitude,
-      longitude:address?.dataValues.longitude
+      longitude:address?.dataValues.longitude,
+      token:userExist?.dataValues.token
    }
       // Promise Resolved
       return Promise.resolve(resObj);

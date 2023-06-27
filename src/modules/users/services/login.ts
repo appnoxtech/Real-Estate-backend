@@ -5,9 +5,6 @@ import User from '../model/userModel';
 import { ERROR_TYPE } from '../../../utils/constants'; 
 import Exception from '../../../exceptions/exception';
 
-
-const TOKEN_KEY = 'taxiRideBooking'
-
 export class Login {
     
     async logout(req: any, res: any) {

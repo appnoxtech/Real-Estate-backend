@@ -32,6 +32,14 @@ module.exports = {
       location: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      latitude: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      longitude: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },  
       area: {
         type: Sequelize.STRING,

@@ -34,7 +34,15 @@ const Properties = databaseInstance.define('properties', {
    location: {
      type: DataTypes.STRING,
      allowNull: false,
-   },  
+   },
+   latutude: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  longitude: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },  
    area: {
      type: DataTypes.STRING,
      allowNull: false,

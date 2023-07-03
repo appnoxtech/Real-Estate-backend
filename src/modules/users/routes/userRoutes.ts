@@ -31,7 +31,9 @@ class MainRouter {
         this.router.route(`/api/v1/generate-otp`)
             .post(this.user.generateOtp)
         this.router.route(`/api/v1/verify-otp`)
-            .post(this.user.generateOtp)
+            .post(this.user.verifyOtp)
+        this.router.route(`/api/v1/login`)
+            .post(this.user.login)
         this.router.route(`/api/v1/logout`)
             .post(this.user.logout)
         }catch(err:any){

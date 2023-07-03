@@ -29,22 +29,21 @@ export class UserService {
 
   async registerUser(req: any, res: any) {
     try {
-      const password = req.body.password;
       const phoneNumber = req.body.phoneNumber;
       const email = req.body?.email;
-      const name = req.body.name;
-  
+      const reqname = req.body?.name;
+      let name = reqname.trim();
+      if (name === "" || name === null || name === undefined) {
+        throw new Exception(ERROR_TYPE.INVALID_INPUT, 'name required');
+      }
+
       // Validate phone number format
       const regex = /^(?:(?:\+|0{0,2})1(\s*[\-]\s*)?)?\(?[2-9]\d{2}\)?[-.\s]?[2-9]\d{2}[-.\s]?\d{4}$/;
   
       if (!regex.test(phoneNumber)) {
         throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid phone number');
       }
-  
-      if (name === "" || name === null || name === undefined) {
-        throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Please enter name.');
-      }
-  
+
       if (!email) {
         if (!emailValidator.validate(email)) {
           throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Invalid email');
@@ -59,8 +58,13 @@ export class UserService {
       }
   
       const user = await User.create(req.body);
-      return Promise.resolve(user);
+      const type = "GENERATE"
+      const Number = phoneNumber
+      console.log(Number)
+      const generateOTP = await this.generateOtp(Number,type)
+      return Promise.resolve({user,generateOTP});
     } catch (err: any) {
+      console.log("435678",err)
       return Promise.reject(err);
     }
   }
@@ -129,47 +133,29 @@ export class UserService {
     }
   }
 
-  async generateOtp(req: any, res: any, next: any){
+  async generateOtp(phoneNumber: any, type: any){
     try {
       // Destructuring
-      const { phoneNumber, otp, type } = req.body;
+
       if(!phoneNumber){
         throw new Exception(ERROR_TYPE.NOT_FOUND,"please provide phoneNumber")
       }
-  
-      if (type == CommonStrings.GENERATE) {
+      console.log("1111111--")
+     
         const otp = await this.sendOtpService(phoneNumber);
         const otpValue = otp?.dataValues.otp
         return Promise.resolve(`otp send successfully:${otpValue}`)
-      } else {
-        // Verify OTP
-      
-       const verify =  await this.verifyOtpService(phoneNumber, otp,res);
-       if(verify == false){
-        return Promise.resolve("User Not Found with this phone-number")
-       }
-       const resObj = {
-        name:verify?.name,
-        street:verify?.street,
-        country:verify?.country,
-        city:verify?.city,
-        postalCode:verify?.postalCode,
-        state:verify?.state,
-        latitude:verify?.latitude,
-        longitude:verify?.longitude,
-        token:verify?.token
-     }
 
-        return Promise.resolve(resObj)
-      }
     } catch (err: any) {
       return Promise.reject(err);
     }
   };
 
+
+
  async sendOtpService(phoneNumber:any){
     try {
-
+      console.log("1111111--")
         const regex: any = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
   
         // const validPhoneNumber = phone(phoneNumber);
@@ -178,7 +164,7 @@ export class UserService {
         }
       // Generating OTP
       const otp = Math.floor(1000 + Math.random() * 9000);
-  
+      console.log("1111111--")
       await sendMessage(phoneNumber, otp);
   
       const savingObj = {
@@ -198,7 +184,7 @@ export class UserService {
     }
   };
  
-  async verifyOtpService(phoneNumber:any, otp:any,res:any){
+  async verifyOtpService(phoneNumber:any, otp:any,){
     try {
       if(!otp){
         throw new Exception(ERROR_TYPE.BAD_REQUEST,'please provide otp for verification')
@@ -210,7 +196,7 @@ export class UserService {
             otp: otp,
           },
         });
-    
+       
         // Matching OTP
         if (!verifyOtp) {
           throw new Exception(
@@ -222,7 +208,7 @@ export class UserService {
         });
     
         if(!userExist) {
-          return false
+          throw new Exception(ERROR_TYPE.BAD_REQUEST,'user not-found')
         }
         const address = await Address.findOne({where:{userId:userExist.dataValues.id}})
         if (userExist) {

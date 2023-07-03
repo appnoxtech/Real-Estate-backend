@@ -22,11 +22,13 @@ AWS.config.update({
  * @param {string} type.
  * Returns {string} promise resolved
  */
+
+const sns = new AWS.SNS();
 export const sendMessage = async (phoneNumber:string,otp:number) => {
     try {
         const params = {
             Message: `Your one time password:${otp}`,
-            PhoneNumber: '+917355312681', // Replace with the desired phone number
+            PhoneNumber: `+91${phoneNumber}`, // Replace with the desired phone number
             MessageAttributes: {
                 'AWS.SNS.SMS.SenderID': {
                     'DataType': 'String',
@@ -34,9 +36,17 @@ export const sendMessage = async (phoneNumber:string,otp:number) => {
                 }
             }
           };
-      const response = await new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
-      return response;
+          console.log(params.PhoneNumber)
+      // const response = await new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+     sns.publish(params, (err, data) => {
+        if (err) {
+          console.log('Error sending OTP message:', err);
+        } else {
+          console.log('OTP message sent successfully:', data);
+        }
+      });
+    
     } catch (err: any) {
-      return Promise.reject("otp send")
+      return Promise.reject("unable to send otp.")
     }
   };

@@ -66,6 +66,14 @@ export class UserController {
     
     }
 
+    async login(req: Request, res: Response, next: NextFunction) {
+        try {
+            const data = await loginInstance.login(req,res);
+            respHndlr.sendSuccess(res,data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        };
+    }
 
     async logout(req: Request, res: Response, next: NextFunction) {
         try {
@@ -78,7 +86,20 @@ export class UserController {
     
     async generateOtp(req: Request, res: Response, next: NextFunction) {
         try {
-            const data = await UserServiceInstance.generateOtp(req,res,next);
+            const phoneNumber = req.body.phoneNumber
+            const type = req.body.type
+            const data = await UserServiceInstance.generateOtp(phoneNumber,type);
+            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        };
+
+    }
+
+    async verifyOtp(req: Request, res: Response, next: NextFunction) {
+        try {
+            const {phoneNumber,otp} = req.body
+            const data = await UserServiceInstance.verifyOtpService(phoneNumber,otp);
             respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
         } catch (err: any) {
             respHndlr.sendError(res, err);

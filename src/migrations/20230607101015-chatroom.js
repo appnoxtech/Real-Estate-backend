@@ -43,6 +43,10 @@ module.exports = {
    },
  
    async down (queryInterface, Sequelize) {
+    try{
       await queryInterface.dropTable('chatroom');
+   }catch(err){
+    logger.error("Error in drop chatroom table:: ",err)
+   }
    }
 };

@@ -3,6 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    try{
     queryInterface.createTable('addresses', {
       id: {
         type: Sequelize.UUID,
@@ -58,9 +59,16 @@ module.exports = {
         defaultValue: Sequelize.NOW,
       },
     });
+  }catch(err){
+    logger.error("Error in creating Addresses table:: ",err)
+  }
   },
   async down(queryInterface, Sequelize) {
+    try{
     await queryInterface.dropTable('addresses');
+  }catch(err){
+       logger.error("Error in drop address table:: ",err)
+  }
   },
 };
 

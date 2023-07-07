@@ -50,6 +50,10 @@ module.exports = {
    },
  
    async down (queryInterface, Sequelize) {
+    try{
       await queryInterface.dropTable('messages');
+   }catch(err){
+    logger.error("Error in drop message table:: ",err)
+   }
    }
 };

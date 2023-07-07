@@ -47,6 +47,10 @@ module.exports = {
    },
  
    async down (queryInterface, Sequelize) {
+    try{
       await queryInterface.dropTable('otps');
+   }catch(err){
+    logger.error("Error in drop otps Table:: ",err)
+   }
    }
 };

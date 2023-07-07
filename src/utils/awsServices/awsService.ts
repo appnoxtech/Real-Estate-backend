@@ -41,9 +41,9 @@ export const sendMessage = async (phoneNumber:string,otp:number) => {
       // const response = await new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
      sns.publish(params, (err, data) => {
         if (err) {
-          logger.info('Error sending OTP message:', err);
+          logger.warn('Error sending OTP message:', err);
         } else {
-          logger.info('OTP message sent successfully:', data);
+          logger.warn('OTP message sent successfully:', data);
         }
       });
     

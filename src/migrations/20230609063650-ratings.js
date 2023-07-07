@@ -63,6 +63,10 @@ module.exports = {
    },
  
    async down (queryInterface, Sequelize) {
+    try{
       await queryInterface.dropTable('ratings');
+   }catch(err){
+    logger.error("Error in drop rating table:: ",err)
+   }
    }
 };

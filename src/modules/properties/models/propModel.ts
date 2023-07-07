@@ -35,7 +35,7 @@ const Properties = databaseInstance.define('properties', {
      type: DataTypes.STRING,
      allowNull: false,
    },
-   latutude: {
+   latitude: {
     type: DataTypes.STRING,
     allowNull: false,
   },

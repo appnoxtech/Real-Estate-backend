@@ -50,7 +50,7 @@ export class PropertyService {
       return Promise.reject(err);
     }
   }
-  
+
   async updatePropertyDetails(req: any) {
     try {
       const title= req.body?.title
@@ -72,7 +72,7 @@ export class PropertyService {
   async deleteProperty(req: any) {
     try {
       const id = req.params.id;
-    
+
       const property = await Properties.findOne({ where: { id: id } });
       if (!property) {
         throw new Exception(ERROR_TYPE.NOT_FOUND, 'property not found')
@@ -83,11 +83,28 @@ export class PropertyService {
       return Promise.reject(err)
     }
   }
-
+  async readAllCountriesDetails(req: any) {
+    try {
+      const response = await axios.get('https://countriesnow.space/api/v0.1/countries');
+      let responseData = response.data.data
+      let result = []
+      for (let i = 0; i < responseData.length; i++) {
+        const item = responseData[i];
+        result.push({
+          country: item.country,
+          cities: item.cities
+        });
+      }
+      return result
+    }
+    catch (err: any) {
+      logger.err("Error in retrieving Country Data", err)
+    }
+  }
   async readAllPropertiesDetails(req: any) {
     try {
       let { status, title, sortBy, sortOrder, search } = req.query;
-      let query = paginator(req.query, ['title', 'location', 'price','type']);
+      let query = paginator(req.query, ['title', 'location', 'price', 'type']);
       if (sortBy === undefined) {
         sortBy = 'title';
       }
@@ -115,6 +132,6 @@ export class PropertyService {
       return Promise.reject(error.message);
     }
   }
-  
+
 }
 

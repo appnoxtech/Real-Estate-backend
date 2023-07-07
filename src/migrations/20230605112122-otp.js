@@ -1,5 +1,7 @@
 'use strict';
 
+const { logger } = require('../utils/logger');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -40,7 +42,7 @@ module.exports = {
          )
      }catch(error)
      {
-       console.log("error at 20230605112122-otp.js",error)
+       logger.info("error at 20230605112122-otp.js",error)
      }
    },
  

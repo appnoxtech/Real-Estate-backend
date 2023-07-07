@@ -23,6 +23,7 @@ export class UserService {
       }
       return Promise.resolve(result);
     } catch (error: any) {
+      logger.error("Error in geting userData:: ",error)
       return Promise.reject(error)
     }
   }
@@ -60,11 +61,10 @@ export class UserService {
       const user = await User.create(req.body);
       const type = "GENERATE"
       const Number = phoneNumber
-      console.log(Number)
       const generateOTP = await this.generateOtp(Number,type)
       return Promise.resolve({user,generateOTP});
     } catch (err: any) {
-      console.log("435678",err)
+      logger.error("Error in Register user:: ",err)
       return Promise.reject(err);
     }
   }
@@ -140,8 +140,6 @@ export class UserService {
       if(!phoneNumber){
         throw new Exception(ERROR_TYPE.NOT_FOUND,"please provide phoneNumber")
       }
-      console.log("1111111--")
-     
         const otp = await this.sendOtpService(phoneNumber);
         const otpValue = otp?.dataValues.otp
         return Promise.resolve(`otp send successfully:${otpValue}`)
@@ -155,7 +153,6 @@ export class UserService {
 
  async sendOtpService(phoneNumber:any){
     try {
-      console.log("1111111--")
         const regex: any = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
   
         // const validPhoneNumber = phone(phoneNumber);
@@ -164,7 +161,6 @@ export class UserService {
         }
       // Generating OTP
       const otp = Math.floor(1000 + Math.random() * 9000);
-      console.log("1111111--")
       await sendMessage(phoneNumber, otp);
   
       const savingObj = {

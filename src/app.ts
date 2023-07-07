@@ -3,9 +3,10 @@ import expressServer from "./server";
 import connectPSQlDb from "./config/dbConnection";
 import { Server, Socket } from "socket.io";
 import { socketHandler } from "./utils/socketHandler";
+import { logger } from "./utils/logger";
 
 // Normalize port number which will expose server
-const port = normalizePort(5000);
+const port = normalizePort(3000);
 
 // Instantiate the expressServer class
 const expressInstance = new expressServer().expressInstance;
@@ -30,7 +31,7 @@ var name: String;
 
 // Start listening on the specified Port (Default: 5000)
 server.listen(port, () => {
-  console.log(`listening on port ${port}`);
+  logger.info(`listening on port ${port}`);
 });
 socketHandler(io);
 connectPSQlDb();

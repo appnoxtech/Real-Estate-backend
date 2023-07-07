@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import config from "config";
 import dotenv from 'dotenv';
+import { logger } from "../logger";
 dotenv.config()
 const AWS_IAM_ACCESS_KEY_ID: string | undefined = process.env.AWS_IAM_ACCESS_KEY_ID;
 const AWS_IAM_SECRET_ACCESS_KEY: string | undefined = process.env.AWS_IAM_SECRET_ACCESS_KEY;
@@ -36,13 +37,13 @@ export const sendMessage = async (phoneNumber:string,otp:number) => {
                 }
             }
           };
-          console.log(params.PhoneNumber)
+          logger.info(params.PhoneNumber)
       // const response = await new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
      sns.publish(params, (err, data) => {
         if (err) {
-          console.log('Error sending OTP message:', err);
+          logger.info('Error sending OTP message:', err);
         } else {
-          console.log('OTP message sent successfully:', data);
+          logger.info('OTP message sent successfully:', data);
         }
       });
     

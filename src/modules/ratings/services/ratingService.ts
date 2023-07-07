@@ -82,7 +82,7 @@ export class RatingsService {
   
   async updateRatings(req: any) {
     try {
-      console.log("ffhsgdjh",req.body)
+    
       const propertyId= req.params?.propertyId
       const userId = req.params?.userId
 

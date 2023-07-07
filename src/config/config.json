@@ -1,7 +1,7 @@
 {
   "local": {
     "username": "root",
-    "password": "manjari@19",
+    "password": "appnox.ai",
     "database": "realEstate",
     "host": "127.0.0.1",
     "dialect": "mysql"

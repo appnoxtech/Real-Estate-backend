@@ -1,5 +1,7 @@
 'use strict';
 
+const { logger } = require('../utils/logger');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -45,7 +47,7 @@ module.exports = {
          )
      }catch(error)
      {
-       console.log("error at 20230613072716-push_notification_token.js",error)
+       logger.info("error at 20230613072716-push_notification_token.js",error)
      }
    },
  

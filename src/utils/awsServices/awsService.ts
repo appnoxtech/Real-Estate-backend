@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import config from "config";
 import dotenv from 'dotenv';
+import { logger } from "../logger";
 dotenv.config()
 const AWS_IAM_ACCESS_KEY_ID: string | undefined = process.env.AWS_IAM_ACCESS_KEY_ID;
 const AWS_IAM_SECRET_ACCESS_KEY: string | undefined = process.env.AWS_IAM_SECRET_ACCESS_KEY;

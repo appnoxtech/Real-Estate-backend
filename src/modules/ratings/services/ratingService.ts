@@ -82,7 +82,7 @@ export class RatingsService {
   
   async updateRatings(req: any) {
     try {
-      console.log("ffhsgdjh",req.body)
+    
       const propertyId= req.params?.propertyId
       const userId = req.params?.userId
 
@@ -141,7 +141,7 @@ export class RatingsService {
       });
       return Promise.resolve(Data);
     } catch (error: any) {
-      logger.error("Error in reading all ratings & reviews.", error.message);
+      logger.error("Error in reading All ratings & reviews.", error.message);
       return Promise.reject(error.message);
     }
   }

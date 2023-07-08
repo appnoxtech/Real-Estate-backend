@@ -1,5 +1,7 @@
 'use strict';
 
+const { logger } = require('../utils/logger');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -36,11 +38,15 @@ module.exports = {
          )
      }catch(error)
      {
-       console.log("error at 20230607101015-chatroom.js",error)
+       logger.info("error at 20230607101015-chatroom.js",error)
      }
    },
  
    async down (queryInterface, Sequelize) {
+    try{
       await queryInterface.dropTable('chatroom');
+   }catch(err){
+    logger.error("Error in drop chatroom table:: ",err)
+   }
    }
 };

@@ -51,4 +51,14 @@ export class PropertyController {
             respHndlr.sendError(res, err);
         };
     }
+
+    async getAllCountries(req: Request, res: Response, next: NextFunction) {
+        try {
+            const data = await PropertyServiceInstance.readAllCountriesDetails(req);
+            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        }
+    }
+
 }

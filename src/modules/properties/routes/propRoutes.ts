@@ -28,6 +28,9 @@ class MainRouter {
             .get(this.property.getPropertyById)
             this.router.route(`/api/v1/properties`)
             .get(this.property.getAllProperties)
+        this.router.route(`/api/v1/country`)
+            .get(this.property.getAllCountries)
+
         }catch(err:any){
             logger.error("error occur in access routes",err)
         }

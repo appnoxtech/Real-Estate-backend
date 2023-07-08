@@ -3,6 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
+    try{
     queryInterface.createTable('properties',
     {
       id: {
@@ -89,9 +90,16 @@ module.exports = {
      }
     }
       )
+  }catch(err){
+    logger.error("Error in creating properties table:: ",err)
+  }
 },
   async down (queryInterface, Sequelize) {
+    try{
     await queryInterface.dropTable('properties');
+  }catch(err){
+    logger.error("Error in drop properties table:: ",err)
+  }
   }
 };
 

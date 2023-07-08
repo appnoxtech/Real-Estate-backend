@@ -3,6 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
+    try{
       queryInterface.createTable('users',
        {
          id: {
@@ -59,9 +60,16 @@ module.exports = {
         }
        }
          )
+      }catch(err){
+         logger.error("Error in creating users table:: ",err)
+      }
    },
  
    async down (queryInterface, Sequelize) {
+    try{
       await queryInterface.dropTable('users');
+   }catch(err){
+    logger.error("Error in drop users table:: ")
+   }
    }
 };

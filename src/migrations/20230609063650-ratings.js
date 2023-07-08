@@ -1,5 +1,7 @@
 'use strict';
 
+const { logger } = require('../utils/logger');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -56,11 +58,15 @@ module.exports = {
          )
      }catch(error)
      {
-       console.log("error at 20230609063650-ratings.js",error)
+       logger.info("error at 20230609063650-ratings.js",error)
      }
    },
  
    async down (queryInterface, Sequelize) {
+    try{
       await queryInterface.dropTable('ratings');
+   }catch(err){
+    logger.error("Error in drop rating table:: ",err)
+   }
    }
 };

@@ -6,7 +6,7 @@ import { socketHandler } from "./utils/socketHandler";
 import { logger } from "./utils/logger";
 
 // Normalize port number which will expose server
-const port = normalizePort(3000);
+const port = normalizePort(5000);
 
 // Instantiate the expressServer class
 const expressInstance = new expressServer().expressInstance;

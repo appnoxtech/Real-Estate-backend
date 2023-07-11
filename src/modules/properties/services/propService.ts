@@ -33,16 +33,9 @@ export class PropertyService {
   async registerProperty(req: any, res: any) {
     try {
       const {title}= req.body
-      let titleReq = title.trim();
-      if (titleReq === "" || titleReq === null || titleReq === undefined) {
-        throw new Exception(ERROR_TYPE.INVALID_INPUT, 'Title required');
-      }
-
       const alreadyExist =  await Properties.findOne({where:{title:title}})
-
       if(alreadyExist){
         throw new Exception(ERROR_TYPE.ALREADY_EXISTS,'property already exist with this title.')
-
       }
       const propertyCreate = await Properties.create(req.body)
       return Promise.resolve(propertyCreate);

@@ -31,6 +31,8 @@ class MainRouter {
             .get(this.property.getAllProperties)
         this.router.route(`/api/v1/country`)
             .get(this.property.getAllCountries)
+        this.router.route(`/api/v1/search`)
+            .get(this.property.search)    
 
         }catch(err:any){
             logger.error("error occur in access routes",err)

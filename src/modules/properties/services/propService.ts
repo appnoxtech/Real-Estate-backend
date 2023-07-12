@@ -125,6 +125,17 @@ export class PropertyService {
       return Promise.reject(error.message);
     }
   }
+  async search(req: any) {
+    try {
+      let { type, location, price } = req.query;
+      const listings = await Properties.findAll({
+        where: { ...req.query }
+      });
+      return Promise.resolve(listings);
+    } catch (error: any) {
+      return Promise.reject(error.message);
+    }
+  }
 
 }
 

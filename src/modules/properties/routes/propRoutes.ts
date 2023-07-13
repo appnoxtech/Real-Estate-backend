@@ -2,6 +2,7 @@ import { Router } from "express";
 import { PropertyController } from "../controllers/propController";
 import { Validation } from "../../../middleware/authValidator";
 import { logger } from "../../../utils/logger";
+import {propertiesValidator} from '../validator/validation'
 
 
 class MainRouter {
@@ -19,7 +20,7 @@ class MainRouter {
     propertyRouters() {
         try{
         this.router.route(`/api/v1/property/create`)
-            .post(this.property.createProperty)
+            .post(propertiesValidator.makeValidation('create'),this.property.createProperty)
         this.router.route(`/api/v1/property/update/:id`)
             .patch(this.property.updateProperty)
         this.router.route(`/api/v1/property/delete/:id`)
@@ -30,6 +31,8 @@ class MainRouter {
             .get(this.property.getAllProperties)
         this.router.route(`/api/v1/country`)
             .get(this.property.getAllCountries)
+        this.router.route(`/api/v1/search`)
+            .get(this.property.search)    
 
         }catch(err:any){
             logger.error("error occur in access routes",err)

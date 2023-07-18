@@ -4,6 +4,7 @@ import propertyRoutes from './modules/properties/routes/propRoutes';
 import chatroomRoutes from './modules/chat/routes/chat';
 import fileUploadRoutes from './modules/documentsUpload/routes/documentsUpload';
 import ratingRoutes from './modules/ratings/routes/ratingRoutes'
+import terms_routes from './modules/responses/routes/terms_routes';
 
 const mainRouter = Router()
 
@@ -15,5 +16,6 @@ mainRouter.use(propertyRoutes)
 mainRouter.use(chatroomRoutes)
 mainRouter.use(fileUploadRoutes)
 mainRouter.use(ratingRoutes)
+mainRouter.use(terms_routes)
 
 export default mainRouter

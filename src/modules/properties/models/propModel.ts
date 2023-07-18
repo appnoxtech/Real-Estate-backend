@@ -73,6 +73,16 @@ const Properties = databaseInstance.define('properties', {
     values: ['available','booked','rented'],
     defaultValue: 'available',
   },
+  lookingTo:{
+    type:DataTypes.ENUM,
+    allowNull:false,
+    values: ['Buy','Rent/Lease']
+  },
+  readyToMove:{
+    type: DataTypes.ENUM,
+    allowNull: false,
+    values: ['Yes','No']
+  },
   // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
   createdAt: {
     type: DataTypes.DATE,

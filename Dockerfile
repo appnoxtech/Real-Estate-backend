@@ -1,12 +1,21 @@
-FROM node:18
+# Stage: dependencies
+FROM node:16-alpine AS dependencies
 
-WORKDIR /realEstate
+WORKDIR /user
 
 # Install Packages
 COPY package*.json ./
 
 # Running The Command
 RUN npm install
+
+# Stage: builder
+FROM node:16-alpine AS builder
+
+WORKDIR /user
+
+# Copy dependencies from the dependencies stage
+COPY --from=dependencies /user/node_modules ./node_modules
 
 # Bundle app source
 COPY . .
@@ -15,4 +24,4 @@ COPY . .
 EXPOSE 5000
 
 # Command To Run
-CMD [ "npm", "run" ,"dev-server"]
+CMD [ "npm", "run", "dev-server" ]

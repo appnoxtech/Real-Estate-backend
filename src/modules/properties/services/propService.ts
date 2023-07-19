@@ -127,10 +127,13 @@ export class PropertyService {
   }
   async search(req: any) {
     try {
-      let { type, location, price } = req.query;
-      const listings = await Properties.findAll({
+      let { type, location, price ,lookingTo,readyToMove } = req.query;
+      let listings = await Properties.findAll({
         where: { ...req.query }
       });
+      if(listings.length === 0){
+        throw new Exception(ERROR_TYPE.NOT_FOUND,'No Data found for these filter:: ')
+      }
       return Promise.resolve(listings);
     } catch (error: any) {
       return Promise.reject(error.message);

@@ -28,7 +28,7 @@ class UsersValidator extends Validator{
                         .trim()
                         .notEmpty()
                         .withMessage("phone number is required")
-                        .matches(/^(?:(?:\+|0{0,2})1(\s*[\-]\s*)?)?\(?[2-9]\d{2}\)?[-.\s]?[2-9]\d{2}[-.\s]?\d{4}$/)
+                        .matches(/^[0-9 +]+$/)
                         .withMessage("Invalid Phone number"),
                 ],
                 logout:[

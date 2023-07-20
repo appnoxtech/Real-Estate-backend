@@ -23,7 +23,7 @@ export class Login {
             // const user = await User.findOne({ username:username });
             const user = await User.findOne({where:{ phoneNumber:phoneNumber}});
             if (!user) {
-                throw new Exception(ERROR_TYPE.BAD_REQUEST, 'user not registered')  
+                throw new Exception(ERROR_TYPE.BAD_REQUEST, 'user not registered' )  
                 
             }
             if (user?.dataValues?.isPhoneVerified === false) {

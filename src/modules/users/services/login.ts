@@ -15,7 +15,7 @@ export class Login {
     constructor() {
 
     }
-    async login(req: any, res?: any) {
+    async login(req: any, res: any) {
         try {
             // Get user input
             const { phoneNumber } = req.body;
@@ -23,9 +23,15 @@ export class Login {
             // const user = await User.findOne({ username:username });
             const user = await User.findOne({where:{ phoneNumber:phoneNumber}});
             if (!user) {
-                throw new Exception(ERROR_TYPE.BAD_REQUEST, 'user not registered')
+                throw new Exception(ERROR_TYPE.BAD_REQUEST, 'user not registered' )  
                 
             }
+            if (user?.dataValues?.isPhoneVerified === false) {
+                const type = 'GENERATE';
+                const generateOTP = await UserServiceInstance.generateOtp(phoneNumber, type);
+               throw new Exception(ERROR_TYPE.BAD_REQUEST,'Phone number is not verified', { generateOTP })
+              }
+               // Phone number is verified, proceed with generating token and updating user data
             const type = 'GENERATE'
             const generateOTP = await UserServiceInstance.generateOtp(phoneNumber,type)
             if (user) {

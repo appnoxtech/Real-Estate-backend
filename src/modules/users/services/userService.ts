@@ -39,8 +39,8 @@ export class UserService {
       if (userExist) {
         throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account already exists with this phone number.');
       }
-
-      const user = await User.create(req.body);
+      const userData = { ...req.body, isPhoneVerified: false };
+      const user = await User.create(userData);
       const type = "GENERATE"
       const Number = phoneNumber
       const generateOTP = await this.generateOtp(Number,type)

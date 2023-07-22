@@ -1,5 +1,5 @@
 'use strict';
-
+const { logger } = require('../utils/logger');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {

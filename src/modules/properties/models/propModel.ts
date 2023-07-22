@@ -23,65 +23,70 @@ const Properties = databaseInstance.define('properties', {
     values: ['Residential-property','Commertial-property','Industrial-property','Agricultural-property','Vacant-land','Mixed-use-property','Special-pupose-property','Real-estate-investment'],
     defaultValue: 'Residential-property',
   },
-   description: {
-     type: DataTypes.STRING,
-     allowNull: true,
-   },
-   images: {
-     type: DataTypes.STRING,
-     allowNull: true,
-   },
-   location: {
-     type: DataTypes.STRING,
-     allowNull: false,
-   },
-   latitude: {
+  description: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  images: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  location: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  latitude: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   longitude: {
     type: DataTypes.STRING,
     allowNull: false,
-  },  
-   area: {
-     type: DataTypes.STRING,
-     allowNull: false,
-   },
+  },
+  area: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
    price:{
     type: DataTypes.STRING,
     allowNull: true,
-   },
+  },
    bedrooms:{
-     type: DataTypes.STRING,
-     allowNull: true,
-   },
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
    bathrooms:{
-     type: DataTypes.STRING,
-     allowNull: true,
-   },
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
    amenities:{
-     type: DataTypes.STRING,
-     allowNull: true,
-   },
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
    owner_identity:{
-     type: DataTypes.STRING,
-     allowNull: false,
-   },
-   status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  status: {
     type:DataTypes.ENUM,
     allowNull: false,
     values: ['available','booked','rented'],
     defaultValue: 'available',
   },
-  lookingTo:{
-    type:DataTypes.ENUM,
-    allowNull:false,
-    values: ['Buy','Rent/Lease']
-  },
-  readyToMove:{
+  lookingTo: {
     type: DataTypes.ENUM,
     allowNull: false,
-    values: ['Yes','No']
+    values: ['Buy', 'Rent/Lease']
+  },
+  readyToMove: {
+    type: DataTypes.ENUM,
+    allowNull: false,
+    values: ['Yes', 'No']
+  },
+  propertyType: {
+    type: DataTypes.ENUM,
+    allowNull: false,
+    values: ['Apartment', 'Independent House/Villa', 'Independent/Builder Floor', 'Plot/Land', '1 RK/Studio Apartment', 'Serviced Apartment', 'Farmhouse', 'Other']
   },
   // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
   createdAt: {
@@ -105,7 +110,7 @@ const Properties = databaseInstance.define('properties', {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   // Enable soft deletes
-//   paranoid: true,
+  //   paranoid: true,
 });
 
 export default Properties;

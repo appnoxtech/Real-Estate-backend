@@ -13,6 +13,10 @@ const Properties = databaseInstance.define('properties', {
     primaryKey: true,
     allowNull: false,
   },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false
+  },
   title: {
     type:DataTypes.STRING,
     allowNull:false
@@ -63,7 +67,7 @@ const Properties = databaseInstance.define('properties', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-   owner_identity:{
+  owner_name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -87,6 +91,10 @@ const Properties = databaseInstance.define('properties', {
     type: DataTypes.ENUM,
     allowNull: false,
     values: ['Apartment', 'Independent House/Villa', 'Independent/Builder Floor', 'Plot/Land', '1 RK/Studio Apartment', 'Serviced Apartment', 'Farmhouse', 'Other']
+  },
+  ownerPhoneNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
   createdAt: {

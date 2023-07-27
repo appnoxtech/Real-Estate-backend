@@ -39,6 +39,14 @@ export class UserService {
       if (userExist) {
         throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account already exists with this phone number.');
       }
+      const emailExist = await User.findOne({
+        where:{
+          email:email
+        }
+      })
+      if (emailExist) {
+        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account already exists with this email Id.');
+      }
       const userData = { ...req.body, isPhoneVerified: false };
       const user = await User.create(userData);
       const type = "GENERATE"
@@ -208,16 +216,23 @@ export class UserService {
 
       }
       const resObj = {
+      id:userExist?.dataValues?.id,  
+      token:userExist?.dataValues.token,
       name:userExist?.dataValues.name,
-      street:address?.dataValues.street,
-      country:address?.dataValues.country,
-      city:address?.dataValues.city,
-      postalCode:address?.dataValues.postalCode,
-      state:address?.dataValues.state,
-      latitude:address?.dataValues.latitude,
-      longitude:address?.dataValues.longitude,
-      token:userExist?.dataValues.token
+      profilePhoto:userExist?.dataValues?.profilePhoto,
+      phoneNumber:userExist?.dataValues?.phoneNumber,
+      email:userExist?.dataValues?.email,
+      isPhoneVerified:true,
+      role:userExist?.dataValues?.role
+      // street:address?.dataValues.street,
+      // country:address?.dataValues.country,
+      // city:address?.dataValues.city,
+      // postalCode:address?.dataValues.postalCode,
+      // state:address?.dataValues.state,
+      // latitude:address?.dataValues.latitude,
+      // longitude:address?.dataValues.longitude,
       }
+
       // Promise Resolved
       return Promise.resolve(resObj);
   }catch(error:any){

@@ -6,7 +6,7 @@ import { UUID, UUIDV4, STRING, DATE } from 'sequelize';
 const databaseInstance = database;
 
 // Sequelize Model
-const PushNotification = databaseInstance.define('push_notification_token', {
+const PushNotification = databaseInstance.define('push_notification_tokens', {
     id: {
         type: DataTypes.UUID,
         defaultValue: UUIDV4,
@@ -18,7 +18,7 @@ const PushNotification = databaseInstance.define('push_notification_token', {
         allowNull:false
       },
     notificationToken:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
       },
     status: {

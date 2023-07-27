@@ -5,6 +5,7 @@ import User from '../model/userModel';
 import { ERROR_TYPE } from '../../../utils/constants'; 
 import Exception from '../../../exceptions/exception';
 import { UserService } from './userService';
+import { addPushNotification, sendPushNotification } from '../../../utils/notification';
 
 const UserServiceInstance = new UserService()
 
@@ -18,6 +19,7 @@ export class Login {
     async login(req: any, res: any) {
         try {
             // Get user input
+            const message = `hello its for notification module`
             const { phoneNumber } = req.body;
            
             // const user = await User.findOne({ username:username });
@@ -25,6 +27,11 @@ export class Login {
             if (!user) {
                 throw new Exception(ERROR_TYPE.BAD_REQUEST, 'user not registered' )  
                 
+            }
+
+            logger.info(user.dataValues.id,req.body.notificationToken)
+            if(req.body.notificationToken){
+                await addPushNotification(user.dataValues.id,req.body.notificationToken)
             }
             if (user?.dataValues?.isPhoneVerified === false) {
                 const type = 'GENERATE';
@@ -47,9 +54,15 @@ export class Login {
                 // save user token
                 user.dataValues.token = token;
                 const userupdated = await User.update({ token: user.dataValues.token },{where:{ phoneNumber:phoneNumber}});
+
+                await sendPushNotification(
+                    [user?.dataValues?.id],
+                    "user login services",
+                    message
+                )
                    
             }
-            return Promise.resolve({user,generateOTP})
+            return Promise.resolve({generateOTP,message:"Login Successfully"})
             
         } catch (err) {
             logger.error("Error in Login ",err)

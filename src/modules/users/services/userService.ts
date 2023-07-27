@@ -216,16 +216,23 @@ export class UserService {
 
       }
       const resObj = {
+      id:userExist?.dataValues?.id,  
+      token:userExist?.dataValues.token,
       name:userExist?.dataValues.name,
-      street:address?.dataValues.street,
-      country:address?.dataValues.country,
-      city:address?.dataValues.city,
-      postalCode:address?.dataValues.postalCode,
-      state:address?.dataValues.state,
-      latitude:address?.dataValues.latitude,
-      longitude:address?.dataValues.longitude,
-      token:userExist?.dataValues.token
+      profilePhoto:userExist?.dataValues?.profilePhoto,
+      phoneNumber:userExist?.dataValues?.phoneNumber,
+      email:userExist?.dataValues?.email,
+      isPhoneVerified:true,
+      role:userExist?.dataValues?.role
+      // street:address?.dataValues.street,
+      // country:address?.dataValues.country,
+      // city:address?.dataValues.city,
+      // postalCode:address?.dataValues.postalCode,
+      // state:address?.dataValues.state,
+      // latitude:address?.dataValues.latitude,
+      // longitude:address?.dataValues.longitude,
       }
+
       // Promise Resolved
       return Promise.resolve(resObj);
   }catch(error:any){

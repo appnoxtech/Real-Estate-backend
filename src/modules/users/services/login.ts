@@ -29,7 +29,7 @@ export class Login {
                 
             }
 
-            console.log(user.dataValues.id,req.body.notificationToken)
+            logger.info(user.dataValues.id,req.body.notificationToken)
             if(req.body.notificationToken){
                 await addPushNotification(user.dataValues.id,req.body.notificationToken)
             }
@@ -62,7 +62,7 @@ export class Login {
                 )
                    
             }
-            return Promise.resolve({user,generateOTP})
+            return Promise.resolve({generateOTP,message:"Login Successfully"})
             
         } catch (err) {
             logger.error("Error in Login ",err)

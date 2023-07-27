@@ -14,7 +14,7 @@ import PushNotification from "../modules/users/model/push_notification_model";
 export const addPushNotification = async (userId: string,notificationToken: string
 ) => {
   try {
-    let getPushNotification = await PushNotification.findOne({where:{ userId:userId,notificationToken:notificationToken}});
+     let getPushNotification = await PushNotification.findOne({where:{ userId:userId,notificationToken:notificationToken}});
 
     if (getPushNotification && getPushNotification != null){
         return Promise.resolve();

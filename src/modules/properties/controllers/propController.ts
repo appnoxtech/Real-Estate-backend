@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { PropertyService } from "../services/propService"; 
+import { PropertyService } from "../services/propService";
 import { respHndlr} from "../../../utils/index"
 import { RESPONSE_STATUS } from "../../../utils/constants";
 
@@ -63,6 +63,15 @@ export class PropertyController {
     async search(req: Request, res: Response, next: NextFunction) {
         try {
             const data = await PropertyServiceInstance.search(req);
+            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        }
+    }
+
+    async getPropertyByUserId(req: Request, res: Response,next:NextFunction) {
+        try {
+            const data = await PropertyServiceInstance.getPropertyByUserId(req);
             respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
         } catch (err: any) {
             respHndlr.sendError(res, err);

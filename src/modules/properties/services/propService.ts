@@ -139,6 +139,18 @@ export class PropertyService {
       return Promise.reject(error.message);
     }
   }
+  async getPropertyByUserId(req: any) {
+    let data = await Properties.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    if (data.length == 0) {
+      throw new Exception(ERROR_TYPE.NOT_FOUND, "Property not found for this userId")
+    }
+    return Promise.resolve(data)
+
+  }
 
 }
 

@@ -39,6 +39,14 @@ export class UserService {
       if (userExist) {
         throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account already exists with this phone number.');
       }
+      const emailExist = await User.findOne({
+        where:{
+          email:email
+        }
+      })
+      if (emailExist) {
+        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'Account already exists with this email Id.');
+      }
       const userData = { ...req.body, isPhoneVerified: false };
       const user = await User.create(userData);
       const type = "GENERATE"

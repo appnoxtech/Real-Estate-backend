@@ -16,10 +16,14 @@ class UsersValidator extends Validator{
                         .trim()
                         .notEmpty()
                         .withMessage("phone number is required")
-                        .matches(/^(\+\d{1,2}\s?)?(\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/)
-                        .withMessage("Invalid Phone number"),
+                        .matches(/^[0-9 +]+$/)
+                        .withMessage("Invalid Phone number")
+                        .isLength({min:10,max:10})
+                        .withMessage('Phone no must be 10 digits'),
                     check('email')
                         .trim()
+                        .notEmpty()
+                        .withMessage("email is required")
                         .isEmail().withMessage('Invalid email address'),
                     ],  
                     
@@ -29,17 +33,59 @@ class UsersValidator extends Validator{
                         .notEmpty()
                         .withMessage("phone number is required")
                         .matches(/^[0-9 +]+$/)
-                        .withMessage("Invalid Phone number"),
+                        .withMessage("Invalid Phone number")
+                        .isLength({min:10,max:10})
+                        .withMessage('Phone no must be 10 digits'),
                 ],
                 logout:[
                     check('phoneNumber')
                         .trim()
                         .notEmpty()
                         .withMessage("phone number is required")
-                        .matches(/^(?:(?:\+|0{0,2})1(\s*[\-]\s*)?)?\(?[2-9]\d{2}\)?[-.\s]?[2-9]\d{2}[-.\s]?\d{4}$/)
-                        .withMessage("Invalid Phone Number"),
+                        .matches(/^[0-9 +]+$/)
+                        .withMessage("Invalid Phone Number")
+                        .isLength({min:10,max:10})
+                        .withMessage('Phone no must be 10 digits'),
 
-                ]  
+                ],
+                verifyOtp:[
+                    check('phoneNumber')
+                        .trim()
+                        .notEmpty()
+                        .withMessage("phone number is required")
+                        .matches(/^[0-9 +]+$/)
+                        .withMessage("Invalid Phone number")
+                        .isLength({min:10,max:10})
+                        .withMessage('Phone no must be 10 digits'),
+                ],
+                generateOtp:[
+                    check('phoneNumber')
+                        .trim()
+                        .notEmpty()
+                        .withMessage("phone number is required")
+                        .matches(/^[0-9 +]+$/)
+                        .withMessage("Invalid Phone number")
+                        .isLength({min:10,max:10})
+                        .withMessage('Phone no must be 10 digits'),
+                    check('type')
+                          .trim()
+                          .notEmpty()
+                          .withMessage('Type is required')
+                          
+                ],
+                update:[
+                    check('phoneNumber')
+                        .trim()
+                        .optional()
+                        .matches(/^[0-9 +]+$/)
+                        .withMessage("Invalid Phone number")
+                        .isLength({min:10,max:10})
+                        .withMessage('Phone no must be 10 digits'),
+                    check('email')
+                        .trim()
+                        .optional()
+                        .isEmail().withMessage('Invalid email address'),
+                ]
                        
             }
         )

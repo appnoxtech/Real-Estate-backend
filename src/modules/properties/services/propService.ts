@@ -12,6 +12,8 @@ const emailValidator = require('email-validator');
 import { CommonStrings, ERROR_TYPE } from "../../../utils/constants";
 import { logger } from "../../../utils/logger";
 import { sendMessage } from "../../../utils/awsServices/awsService";
+const State = require('country-state-city').State;
+const City = require('country-state-city').City;
 
 
 const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
@@ -32,10 +34,10 @@ export class PropertyService {
 
   async registerProperty(req: any, res: any) {
     try {
-      const {title}= req.body
-      const alreadyExist =  await Properties.findOne({where:{title:title}})
-      if(alreadyExist){
-        throw new Exception(ERROR_TYPE.ALREADY_EXISTS,'property already exist with this title.')
+      const { title } = req.body
+      const alreadyExist = await Properties.findOne({ where: { title: title } })
+      if (alreadyExist) {
+        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'property already exist with this title.')
       }
       const propertyCreate = await Properties.create(req.body)
       return Promise.resolve(propertyCreate);
@@ -46,16 +48,16 @@ export class PropertyService {
 
   async updatePropertyDetails(req: any) {
     try {
-      const title= req.body?.title
+      const title = req.body?.title
       const id = req.params.id
 
-      const Exist =  await Properties.findOne({where:{id:id}})
+      const Exist = await Properties.findOne({ where: { id: id } })
 
-      if(!Exist){
-        throw new Exception(ERROR_TYPE.NOT_FOUND,'property not exist, So we can not update the property details ')
+      if (!Exist) {
+        throw new Exception(ERROR_TYPE.NOT_FOUND, 'property not exist, So we can not update the property details ')
 
       }
-      const propertyUpdated = await Properties.update(req.body,{where:{id:id}})
+      const propertyUpdated = await Properties.update(req.body, { where: { id: id } })
       return Promise.resolve(propertyUpdated);
     } catch (err: any) {
       return Promise.reject(err);
@@ -127,12 +129,12 @@ export class PropertyService {
   }
   async search(req: any) {
     try {
-      let { type, location, price ,lookingTo,readyToMove } = req.query;
+      let { type, location, price, lookingTo, readyToMove } = req.query;
       let listings = await Properties.findAll({
         where: { ...req.query }
       });
-      if(listings.length === 0){
-        throw new Exception(ERROR_TYPE.NOT_FOUND,'No Data found for these filter:: ')
+      if (listings.length === 0) {
+        throw new Exception(ERROR_TYPE.NOT_FOUND, 'No Data found for these filter:: ')
       }
       return Promise.resolve(listings);
     } catch (error: any) {
@@ -152,5 +154,22 @@ export class PropertyService {
 
   }
 
-}
+  async getStates(req: any) {
 
+    let countryCode = req.query.countryCode
+    if (countryCode) {
+      let data = State.getStatesOfCountry(`${countryCode}`)
+      return Promise.resolve(data)
+    }
+  }
+
+  async getCities(req: any) {
+    let countryCode = req.query.countryCode
+    let stateCode = req.query.stateCode
+    if (countryCode && stateCode) {
+      let data = City.getCitiesOfState(`${countryCode}`, `${stateCode}`)
+      return Promise.resolve(data)
+    }
+
+  }
+}

@@ -78,4 +78,22 @@ export class PropertyController {
         }
     }
 
+    async getStates(req: Request, res: Response,next:NextFunction) {
+        try {
+            const data = await PropertyServiceInstance.getStates(req);
+            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        }
+    }
+
+    async getCities(req: Request, res: Response,next:NextFunction) {
+        try {
+            const data = await PropertyServiceInstance.getCities(req);
+            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        }
+    }
+
 }

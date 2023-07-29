@@ -130,22 +130,9 @@ export class UserService {
       if(!phoneNumber){
         throw new Exception(ERROR_TYPE.NOT_FOUND,"please provide phoneNumber")
       }
-      if (type !== 'GENERATE') {
-        throw new Exception(ERROR_TYPE.NOT_FOUND,'Type must be "GENERATE"');
-      }
-      let data = await User.findOne({
-        where:{
-          phoneNumber:phoneNumber
-        }
-      })
-      if(data){
       const otp = await this.sendOtpService(phoneNumber);
       const otpValue = otp?.dataValues.otp
       return Promise.resolve(`otp send successfully:${otpValue}`)
-     }
-     else{
-      throw new Exception(ERROR_TYPE.BAD_REQUEST,"Entered phone number is not egistered")
-     }
 
     } catch (err: any) {
       return Promise.reject(err);
@@ -156,7 +143,7 @@ export class UserService {
 
  async sendOtpService(phoneNumber:any){
     try {
-      const regex: any = /^[0-9 +]+$/;
+      const regex: any = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
 
       // const validPhoneNumber = phone(phoneNumber);
       if (regex.test(phoneNumber) === false) {
@@ -237,6 +224,13 @@ export class UserService {
       email:userExist?.dataValues?.email,
       isPhoneVerified:true,
       role:userExist?.dataValues?.role
+      // street:address?.dataValues.street,
+      // country:address?.dataValues.country,
+      // city:address?.dataValues.city,
+      // postalCode:address?.dataValues.postalCode,
+      // state:address?.dataValues.state,
+      // latitude:address?.dataValues.latitude,
+      // longitude:address?.dataValues.longitude,
       }
 
       // Promise Resolved

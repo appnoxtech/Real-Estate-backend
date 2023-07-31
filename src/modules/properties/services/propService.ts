@@ -14,6 +14,7 @@ import { logger } from "../../../utils/logger";
 import { sendMessage } from "../../../utils/awsServices/awsService";
 const State = require('country-state-city').State;
 const City = require('country-state-city').City;
+import PropertiesType from '../models/propertyTypeModel'
 
 
 const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
@@ -159,6 +160,9 @@ export class PropertyService {
     let countryCode = req.query.countryCode
     if (countryCode) {
       let data = State.getStatesOfCountry(`${countryCode}`)
+      if(data.length == 0){
+        throw new Exception(ERROR_TYPE.NOT_FOUND,"No Data found for this CountryCode")
+      }
       return Promise.resolve(data)
     }
   }
@@ -168,8 +172,23 @@ export class PropertyService {
     let stateCode = req.query.stateCode
     if (countryCode && stateCode) {
       let data = City.getCitiesOfState(`${countryCode}`, `${stateCode}`)
+      if(data.length == 0){
+        throw new Exception(ERROR_TYPE.NOT_FOUND,"No Data found for this CountryCode or StateCode")
+      }
       return Promise.resolve(data)
     }
 
+  }
+
+  async propertyType(req:any){
+    let data = await PropertiesType.findAll({
+      where:{
+        type:req.params.type
+      },attributes:['name']
+    })
+    if(data.length == 0){
+      throw new Exception(ERROR_TYPE.NOT_FOUND,"No DATA Found")
+    }
+    return data
   }
 }

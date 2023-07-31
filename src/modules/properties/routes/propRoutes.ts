@@ -39,6 +39,8 @@ class MainRouter {
             .get(this.property.getStates)      
             this.router.route(`/api/v1/cityByStateCode`)
             .get(this.property.getCities)     
+            this.router.route(`/api/v1/propertyType/:type`)
+            .get(this.property.propertyType) 
 
         }catch(err:any){
             logger.error("error occur in access routes",err)

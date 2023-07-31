@@ -95,5 +95,14 @@ export class PropertyController {
             respHndlr.sendError(res, err);
         }
     }
+    async propertyType(req: Request, res: Response,next:NextFunction) {
+        try {
+            const data = await PropertyServiceInstance.propertyType(req);
+            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        }
+    }
 
 }
+

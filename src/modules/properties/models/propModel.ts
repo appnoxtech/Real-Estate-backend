@@ -87,11 +87,6 @@ const Properties = databaseInstance.define('properties', {
     allowNull: false,
     values: ['Yes', 'No']
   },
-  propertyType: {
-    type: DataTypes.ENUM,
-    allowNull: false,
-    values: ['Apartment', 'Independent House/Villa', 'Independent/Builder Floor', 'Plot/Land', '1 RK/Studio Apartment', 'Serviced Apartment', 'Farmhouse', 'Other']
-  },
   ownerPhoneNumber: {
     type: DataTypes.STRING,
     allowNull: false,

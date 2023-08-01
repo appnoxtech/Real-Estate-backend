@@ -7,7 +7,9 @@ module.exports = {
     try{
     await queryInterface.changeColumn("properties",
       "type", {
-      type: Sequelize.JSON,
+       type: Sequelize.JSON,
+      values: ['Residential-property','Commertial-property','Industrial-property','Agricultural-property','Vacant-land','Mixed-use-property','Special-pupose-property','Real-estate-investment'],
+      defaultValue: 'Residential-property',
       allowNull: false,
     })
     const query = `ALTER TABLE properties DROP COLUMN propertyType;`;

@@ -62,7 +62,8 @@ export class Login {
                 )
                    
             }
-            return Promise.resolve({generateOTP,message:"Login Successfully"})
+            let role = user?.dataValues?.role
+            return Promise.resolve({generateOTP,role,message:"Login Successfully"})
             
         } catch (err) {
             logger.error("Error in Login ",err)

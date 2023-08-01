@@ -1,4 +1,7 @@
 import { PropertyService } from "../modules/properties/services/propService";
+import PropertiesType  from "../modules/properties/models/propertyTypeModel"
+import { logger } from "../utils/logger";
+import { error } from "console";
 require('@babel/preset-typescript')
 const { v4: uuidv4 } = require('uuid');
 
@@ -94,4 +97,12 @@ describe("Properties test cases", () => {
         }
     })
 
+    test("get all data of propertyType",async()=>{
+        try{
+      let data = await PropertiesType.findAll()
+      expect(data.length).not.toBe(0)
+        }catch(err:any){
+          expect(err.message).toBe("No DATA Found")
+        }
+    })
 })

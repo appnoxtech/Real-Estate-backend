@@ -144,7 +144,7 @@ export class UserService {
       return Promise.resolve(`otp send successfully:${otpValue}`)
      }
      else{
-      throw new Exception(ERROR_TYPE.BAD_REQUEST,"Entered phone number is not egistered")
+      throw new Exception(ERROR_TYPE.BAD_REQUEST,"Entered phone number is not registered")
      }
 
     } catch (err: any) {

@@ -22,10 +22,9 @@ const Properties = databaseInstance.define('properties', {
     allowNull:false
   },
   type: {
-    type:DataTypes.ENUM,
+    type:DataTypes.JSON,
     allowNull: false,
-    values: ['Residential-property','Commertial-property','Industrial-property','Agricultural-property','Vacant-land','Mixed-use-property','Special-pupose-property','Real-estate-investment'],
-    defaultValue: 'Residential-property',
+    defaultValue: [],
   },
   description: {
     type: DataTypes.STRING,

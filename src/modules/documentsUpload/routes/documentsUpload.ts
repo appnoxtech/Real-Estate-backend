@@ -17,6 +17,7 @@ class MainRouter {
     }
 
     fileUploadRouters() {
+        logger.info("check-------->01")
         try{
         this.router.route(`/api/v1/document-upload`)
             .post(this.fileUpload.fileupload)

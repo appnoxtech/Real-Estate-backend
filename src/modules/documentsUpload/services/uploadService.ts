@@ -29,6 +29,7 @@ const s3 = new AWS.S3();
 export class FileUploadService {
   async DocumentUpload(req: any) {
     try {
+      console.log("line-32 document upload service",req)
       const form = new multiparty.Form();
   
       return new Promise((resolve, reject) => {

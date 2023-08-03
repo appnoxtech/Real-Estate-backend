@@ -38,17 +38,13 @@ export class FileUploadService {
             return;
           }
   
-
           try {
-            console.log(">>files<<",files)
-             const filePath = files.file[0].path;
-            logger.info("filePath",filePath)
+            const filePath = files.file[0].path;
             const buffer = fs.readFileSync(filePath);
             const type = await FileType.fromBuffer(buffer);
   
             // Replacing The File Name
-             const fileName = await this.replaceFileName(files.file[0].originalFilename, type);
-            logger.info("fileName",fileName)
+            const fileName = await this.replaceFileName(files.file[0].originalFilename, type);
   
             // Calling The Service To Upload The Image To S3 Bucket
             const result = await this.uploadFile(buffer, fileName, type);
@@ -70,7 +66,6 @@ export class FileUploadService {
         });
       });
     } catch (err) {
-      console.log("error----docs",err)
       return Promise.reject(err);
     }
   }

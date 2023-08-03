@@ -9,6 +9,7 @@ logger.info("check---->02")
 export class FileUploadController {
 
     async fileupload(req: Request, res: Response) {
+        logger.info("line 12 controller document upload")
         try {
             const data = await FileUploadServiceInstance.DocumentUpload(req);
             logger.info("data",data)

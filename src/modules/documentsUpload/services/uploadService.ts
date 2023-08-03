@@ -25,7 +25,7 @@ AWS.config.update({
 
 // Acquiring The AWS S3 Functionality
 const s3 = new AWS.S3();
-
+logger.info("line 28 document upload service")
 export class FileUploadService {
   async DocumentUpload(req: any) {
     try {

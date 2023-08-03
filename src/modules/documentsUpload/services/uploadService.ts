@@ -41,7 +41,8 @@ export class FileUploadService {
   
 
           try {
-            const filePath =files['file\n'][0].path;
+            console.log(">>files<<",files)
+             const filePath = files.file[0].path;
             logger.info("filePath",filePath)
             const buffer = fs.readFileSync(filePath);
             const type = await FileType.fromBuffer(buffer);
@@ -70,6 +71,7 @@ export class FileUploadService {
         });
       });
     } catch (err) {
+      console.log("error----docs",err)
       return Promise.reject(err);
     }
   }

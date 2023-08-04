@@ -29,7 +29,6 @@ logger.info("line 28 document upload service")
 export class FileUploadService {
   async DocumentUpload(req: any) {
     try {
-      console.log("line-32 document upload service",req)
       const form = new multiparty.Form();
   
       return new Promise((resolve, reject) => {
@@ -39,16 +38,13 @@ export class FileUploadService {
             return;
           }
   
-
           try {
             const filePath =files.file[0].path;
-            logger.info("filePath",filePath)
             const buffer = fs.readFileSync(filePath);
             const type = await FileType.fromBuffer(buffer);
   
             // Replacing The File Name
             const fileName = await this.replaceFileName(files.file[0].originalFilename, type);
-            logger.info("fileName",fileName)
   
             // Calling The Service To Upload The Image To S3 Bucket
             const result = await this.uploadFile(buffer, fileName, type);

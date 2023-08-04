@@ -5,107 +5,113 @@ import { UUID, UUIDV4, STRING, DATE } from 'sequelize';
 // Database connection instance
 const databaseInstance = database;
 
-// Sequelize Model
+// DataTypes Model
 const Properties = databaseInstance.define('properties', {
+ 
   id: {
     type: DataTypes.UUID,
-    defaultValue: UUIDV4,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
+  },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   userId: {
     type: DataTypes.UUID,
     allowNull: false
   },
-  title: {
-    type:DataTypes.STRING,
-    allowNull:false
-  },
-  type: {
-    type:DataTypes.JSON,
+  propertyType: {
+    type: DataTypes.JSON,
     allowNull: false,
-    defaultValue: [],
+    defaultValue:[]
   },
   description: {
     type: DataTypes.STRING,
     allowNull: true,
   },
   images: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.JSON,
+    allowNull: false,
+    defaultValue:[]
   },
   location: {
-    type: DataTypes.STRING,
+    type: DataTypes.JSON,
     allowNull: false,
-  },
-  latitude: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  longitude: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    defaultValue:[]
   },
   area: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-   price:{
+  price: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-   bedrooms:{
+  bhk: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-   bathrooms:{
+  amenities: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-   amenities:{
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  owner_name: {
+  ownerPhoneNumber: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   status: {
-    type:DataTypes.ENUM,
+    type: DataTypes.ENUM,
     allowNull: false,
-    values: ['available','booked','rented'],
+    values: ['available', 'booked', 'rented'],
     defaultValue: 'available',
   },
   lookingTo: {
     type: DataTypes.ENUM,
     allowNull: false,
-    values: ['Buy', 'Rent/Lease']
+    values: ['Buy', 'Rent/Lease','PG']
+  },
+  furnishedStatus: {
+    type: DataTypes.ENUM,
+    allowNull: false,
+    values: ['unfurnished', 'semi-furnished', 'fully-furnished'],
+    defaultValue: 'unfurnished',
+  },
+  floor:{
+    type:DataTypes.STRING,
+    allowNull:true
+  },
+  ageOfProperty:{
+    type:DataTypes.STRING,
+    allowNull:true
   },
   readyToMove: {
     type: DataTypes.ENUM,
     allowNull: false,
     values: ['Yes', 'No']
   },
-  ownerPhoneNumber: {
-    type: DataTypes.STRING,
-    allowNull: false,
+  parking:{
+     type:DataTypes.ENUM,
+     allowNull:true,
+     values:['Yes','No']
   },
-  // createdAt, lastUpdatedAt and deletedAt managed by Sequelize
+  // createdAt, lastUpdatedAt and deletedAt managed by DataTypes
   createdAt: {
-    type: DataTypes.DATE,
     allowNull: false,
+    type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
   updatedAt: {
+    allowNull: false,
     type: DataTypes.DATE,
-    allowNull: true,
     defaultValue: DataTypes.NOW,
   },
   deletedAt: {
+    allowNull: false,
     type: DataTypes.DATE,
-    allowNull: true,
     defaultValue: DataTypes.NOW,
-  },
+  }
 }, {
   // Auto-create timestamps
   timestamps: true,

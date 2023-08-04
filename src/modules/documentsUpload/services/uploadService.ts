@@ -41,13 +41,13 @@ export class FileUploadService {
   
 
           try {
-            const filePath =files['file\n'][0].path;
+            const filePath =files.file[0].path;
             logger.info("filePath",filePath)
             const buffer = fs.readFileSync(filePath);
             const type = await FileType.fromBuffer(buffer);
   
             // Replacing The File Name
-            const fileName = await this.replaceFileName(files['file\n'][0].originalFilename, type);
+            const fileName = await this.replaceFileName(files.file[0].originalFilename, type);
             logger.info("fileName",fileName)
   
             // Calling The Service To Upload The Image To S3 Bucket

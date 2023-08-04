@@ -29,7 +29,6 @@ logger.info("line 28 document upload service")
 export class FileUploadService {
   async DocumentUpload(req: any) {
     try {
-      console.log("line-32 document upload service",req)
       const form = new multiparty.Form();
   
       return new Promise((resolve, reject) => {
@@ -42,7 +41,6 @@ export class FileUploadService {
 
           try {
             const filePath =files.file[0].path;
-            logger.info("filePath",filePath)
             const buffer = fs.readFileSync(filePath);
             const type = await FileType.fromBuffer(buffer);
   

@@ -9,20 +9,20 @@ let propertiesInstance = new PropertyService();
 let propertiesBody = {
     body: {
         id: uuidv4(),
-        title: "ajnara_le_Garden",
-        type: "Residential-property",
-        description: "Spacious luxury villa with stunning views",
-        images: "image-url-1,image-url-2",
-        location: "Delhi",
-        area: "3000 sq.ft",
-        price: "5000000",
-        bedrooms: "4",
-        bathrooms: "3",
-        amenities: "Swimming pool,Garden,Gym",
-        owner_identity: "John Doe",
-        status: "available",
-        latitude: "12",
-        longitude: "11"
+        title:"Xaviers",
+        userId:"ccb4ba05-d6a9-442a-bda7-c51479782a7b",
+        propertyType:"Commertial-property",
+        description:"hello",
+        price:"2500",
+        bhk:"1bhk",
+        status:"readyToMove",
+        lookingTo:"Buy",
+        furnishedStatus:"unfurnished",
+        ownerName:"adgsdfg",
+        ownerPhoneNumber:"7355072586",
+        area:"23 sqft",
+        propertyOnFloor:"12",
+        totalFloor:"20"
     }
 
 };
@@ -52,11 +52,11 @@ const res = {}
 describe("Properties test cases", () => {
     test("creating properties test cases", async () => {
         let properties = await propertiesInstance.registerProperty(propertiesBody, res)
+        console.log("proooooperties",properties)
         expect(properties).toHaveProperty('title');
         expect(properties).toHaveProperty('type');
         expect(properties).toHaveProperty('location');
-        expect(properties).toHaveProperty('latitude');
-        expect(properties).toHaveProperty('longitude');
+        expect(properties).toHaveProperty('furnishedStatus');
     });
     test("create property for existing title", async () => {
         try {

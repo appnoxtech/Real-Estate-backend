@@ -6,7 +6,7 @@ const { logger } = require('../utils/logger');
 module.exports = {
   async up (queryInterface, Sequelize) {
     try{
-      queryInterface.createTable('chatroom',
+      queryInterface.createTable('chatrooms',
        {
         id: {
           type: Sequelize.UUID,

@@ -15,6 +15,7 @@ import { sendMessage } from "../../../utils/awsServices/awsService";
 const State = require('country-state-city').State;
 const City = require('country-state-city').City;
 import PropertiesType from '../models/propertyTypeModel'
+import User from "../../users/model/userModel";
 
 
 const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
@@ -39,6 +40,14 @@ export class PropertyService {
       const alreadyExist = await Properties.findOne({ where: { title: title } })
       if (alreadyExist) {
         throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'property already exist with this title.')
+      }
+      let usersId = await User.findOne({
+        where: {
+          id: req.body.userId
+        }
+      })
+      if (!usersId) {
+        throw new Exception(ERROR_TYPE.NOT_FOUND, "userId is not exist in user Database")
       }
       const propertyCreate = await Properties.create(req.body)
       return Promise.resolve(propertyCreate);
@@ -160,8 +169,8 @@ export class PropertyService {
     let countryCode = req.query.countryCode
     if (countryCode) {
       let data = State.getStatesOfCountry(`${countryCode}`)
-      if(data.length == 0){
-        throw new Exception(ERROR_TYPE.NOT_FOUND,"No Data found for this CountryCode")
+      if (data.length == 0) {
+        throw new Exception(ERROR_TYPE.NOT_FOUND, "No Data found for this CountryCode")
       }
       return Promise.resolve(data)
     }
@@ -172,22 +181,22 @@ export class PropertyService {
     let stateCode = req.query.stateCode
     if (countryCode && stateCode) {
       let data = City.getCitiesOfState(`${countryCode}`, `${stateCode}`)
-      if(data.length == 0){
-        throw new Exception(ERROR_TYPE.NOT_FOUND,"No Data found for this CountryCode or StateCode")
+      if (data.length == 0) {
+        throw new Exception(ERROR_TYPE.NOT_FOUND, "No Data found for this CountryCode or StateCode")
       }
       return Promise.resolve(data)
     }
 
   }
 
-  async propertyType(req:any){
+  async propertyType(req: any) {
     let data = await PropertiesType.findAll({
-      where:{
-        type:req.params.type
-      },attributes:['name']
+      where: {
+        type: req.params.type
+      }, attributes: ['name']
     })
-    if(data.length == 0){
-      throw new Exception(ERROR_TYPE.NOT_FOUND,"No DATA Found")
+    if (data.length == 0) {
+      throw new Exception(ERROR_TYPE.NOT_FOUND, "No DATA Found")
     }
     return data
   }

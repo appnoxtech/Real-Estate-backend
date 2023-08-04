@@ -61,11 +61,9 @@ const Properties = databaseInstance.define('properties', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  status: {
-    type: DataTypes.ENUM,
+  ownerName: {
+    type: DataTypes.STRING,
     allowNull: false,
-    values: ['available', 'booked', 'rented'],
-    defaultValue: 'available',
   },
   lookingTo: {
     type: DataTypes.ENUM,
@@ -78,7 +76,11 @@ const Properties = databaseInstance.define('properties', {
     values: ['unfurnished', 'semi-furnished', 'fully-furnished'],
     defaultValue: 'unfurnished',
   },
-  floor:{
+  totalFloor:{
+    type:DataTypes.STRING,
+    allowNull:true
+  },
+  propertyOnFloor:{
     type:DataTypes.STRING,
     allowNull:true
   },
@@ -86,10 +88,10 @@ const Properties = databaseInstance.define('properties', {
     type:DataTypes.STRING,
     allowNull:true
   },
-  readyToMove: {
+  status: {
     type: DataTypes.ENUM,
     allowNull: false,
-    values: ['Yes', 'No']
+    values: ['readyToMove','underConstruction']
   },
   parking:{
      type:DataTypes.ENUM,

@@ -6,7 +6,7 @@ const { logger } = require('../utils/logger');
 module.exports = {
   async up (queryInterface, Sequelize) {
     try{
-      queryInterface.createTable('push_notification_token',
+      queryInterface.createTable('push_notification_tokens',
        {
         id: {
           type: Sequelize.UUID,
@@ -19,7 +19,7 @@ module.exports = {
           allowNull:false
         },
         notificationToken:{
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING,
           allowNull: true,
         },
         status: {

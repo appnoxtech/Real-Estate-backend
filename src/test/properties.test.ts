@@ -30,20 +30,20 @@ let request = {
     query: { search: '' },
     body: {
         id: uuidv4(),
-        title: "Data04",
-        type: "Residential-property",
-        description: "Spacious luxury villa with stunning views",
-        images: "image-url-1,image-url-2",
-        location: "Delhi",
-        area: "3000 sq.ft",
-        price: "5000000",
-        bedrooms: "4",
-        bathrooms: "3",
-        amenities: "Swimming pool,Garden,Gym",
-        owner_identity: "John Doe",
-        status: "available",
-        latitude: "12",
-        longitude: "11"
+        title:"Xaviers",
+        userId:"ccb4ba05-d6a9-442a-bda7-c51479782a7b",
+        propertyType:"Commertial-property",
+        description:"hello",
+        price:"2500",
+        bhk:"1bhk",
+        status:"readyToMove",
+        lookingTo:"Buy",
+        furnishedStatus:"unfurnished",
+        ownerName:"adgsdfg",
+        ownerPhoneNumber:"7355072586",
+        area:"23 sqft",
+        propertyOnFloor:"12",
+        totalFloor:"20"
     },
 };
 
@@ -52,7 +52,6 @@ const res = {}
 describe("Properties test cases", () => {
     test("creating properties test cases", async () => {
         let properties = await propertiesInstance.registerProperty(propertiesBody, res)
-        console.log("proooooperties",properties)
         expect(properties).toHaveProperty('title');
         expect(properties).toHaveProperty('type');
         expect(properties).toHaveProperty('location');
@@ -71,10 +70,18 @@ describe("Properties test cases", () => {
     })
     test("get properties by id", async () => {
         try {
-            const req = { params: { propertyId: "76080e47-51b4-4ff7-9631-d35459b2f894" } }
+            const req = { params: { propertyId: "e95c0d26-2128-4430-baa3-0f9883a0f2bc" } }
             const result = await propertiesInstance.getPropertyDetailsById(req)
         } catch (error: any) {
             expect(error.message).toBe("property not found.")
+        }
+    })
+    test("get properties by userId", async () => {
+        try {
+            const req = { params: { userId: "76080e47-51b4-4ff7-9631-d35459b2f894" } }
+            const result = await propertiesInstance.getPropertyByUserId(req)
+        } catch (error: any) {
+            expect(error.message).toBe("Property not found for this userId")
         }
     })
     test("update properties details", async () => {

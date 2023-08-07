@@ -27,6 +27,19 @@ class PropertiesValidator extends Validator{
                     
                     
                 ],
+                getById:[
+                    check('propertyId').trim().isUUID().withMessage("propertyId should be uuid")
+                ],
+                getByUserId:[
+                    check('userId').trim().isUUID().withMessage("userId should be uuid")
+                ],
+                update:[
+                    check('status').trim().optional().isIn(['readyToMove','underConstruction']).withMessage("status should be ['readyToMove','underConstruction']"),
+                    check('ownerPhoneNumber').trim().optional().matches(/^[6-9]\d{9}$/).withMessage("invalid Phone number"),
+                    check('parking').trim().optional().isIn(['Yes','No']).withMessage("should be ['Yes','No']"),
+                    check('furnishedStatus').trim().optional().isIn(['unfurnished', 'semi-furnished', 'fully-furnished']).withMessage("furnishedStatus should be ['unfurnished', 'semi-furnished', 'fully-furnished']"),
+                    check("lookingTo").trim().optional().isIn(['Buy', 'Rent/Lease','PG']).withMessage("lokingTo should be ['Buy', 'Rent/Lease','PG']"),
+                ]
             }
         )
     }

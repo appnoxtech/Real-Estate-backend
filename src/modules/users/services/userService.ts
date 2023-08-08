@@ -67,6 +67,9 @@ export class UserService {
       if (!user) {
         throw new Exception(ERROR_TYPE.NOT_FOUND, 'user not found')
       }
+      if (req.body?.phoneNumber && req.body.phoneNumber !== user?.dataValues?.phoneNumber) {
+        throw new Exception(ERROR_TYPE.BAD_REQUEST, 'Phone number cannot be updated');
+    }
       const updatedData = await User.update(req.body, {
         where: { id: userId },
       });

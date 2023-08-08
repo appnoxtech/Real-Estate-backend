@@ -77,8 +77,7 @@ class UsersValidator extends Validator{
                 update:[
                     check('phoneNumber')
                         .trim()
-                        .notEmpty()
-                        .withMessage("phone number is required")
+                        .optional()
                         .isLength({min:10,max:10})
                         .withMessage('Phone no must be 10 digits')
                         .matches(/^[6-9]\d{9}$/)

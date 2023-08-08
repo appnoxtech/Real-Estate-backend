@@ -156,7 +156,7 @@ export class UserService {
 
  async sendOtpService(phoneNumber:any){
     try {
-      const regex: any = /^[0-9 +]+$/;
+      const regex: any = /^[6-9]\d{9}$/;
 
       // const validPhoneNumber = phone(phoneNumber);
       if (regex.test(phoneNumber) === false) {

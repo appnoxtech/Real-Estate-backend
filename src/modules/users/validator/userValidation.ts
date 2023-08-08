@@ -16,10 +16,11 @@ class UsersValidator extends Validator{
                         .trim()
                         .notEmpty()
                         .withMessage("phone number is required")
-                        .matches(/^[0-9 +]+$/)
-                        .withMessage("Invalid Phone number")
                         .isLength({min:10,max:10})
-                        .withMessage('Phone no must be 10 digits'),
+                        .withMessage('Phone no must be 10 digits')
+                        .matches(/^[6-9]\d{9}$/)
+                        .withMessage("Invalid Phone number")
+                        ,
                     check('email')
                         .trim()
                         .notEmpty()
@@ -32,20 +33,20 @@ class UsersValidator extends Validator{
                         .trim()
                         .notEmpty()
                         .withMessage("phone number is required")
-                        .matches(/^[0-9 +]+$/)
-                        .withMessage("Invalid Phone number")
                         .isLength({min:10,max:10})
-                        .withMessage('Phone no must be 10 digits'),
+                        .withMessage('Phone no must be 10 digits')
+                        .matches(/^[6-9]\d{9}$/)
+                        .withMessage("Invalid Phone number"),
                 ],
                 logout:[
                     check('phoneNumber')
                         .trim()
                         .notEmpty()
                         .withMessage("phone number is required")
-                        .matches(/^[0-9 +]+$/)
-                        .withMessage("Invalid Phone Number")
                         .isLength({min:10,max:10})
-                        .withMessage('Phone no must be 10 digits'),
+                        .withMessage('Phone no must be 10 digits')
+                        .matches(/^[6-9]\d{9}$/)
+                        .withMessage("Invalid Phone number"),
 
                 ],
                 verifyOtp:[
@@ -53,20 +54,20 @@ class UsersValidator extends Validator{
                         .trim()
                         .notEmpty()
                         .withMessage("phone number is required")
-                        .matches(/^[0-9 +]+$/)
-                        .withMessage("Invalid Phone number")
                         .isLength({min:10,max:10})
-                        .withMessage('Phone no must be 10 digits'),
+                        .withMessage('Phone no must be 10 digits')
+                        .matches(/^[6-9]\d{9}$/)
+                        .withMessage("Invalid Phone number"),
                 ],
                 generateOtp:[
                     check('phoneNumber')
                         .trim()
                         .notEmpty()
                         .withMessage("phone number is required")
-                        .matches(/^[0-9 +]+$/)
-                        .withMessage("Invalid Phone number")
                         .isLength({min:10,max:10})
-                        .withMessage('Phone no must be 10 digits'),
+                        .withMessage('Phone no must be 10 digits')
+                        .matches(/^[6-9]\d{9}$/)
+                        .withMessage("Invalid Phone number"),
                     check('type')
                           .trim()
                           .notEmpty()
@@ -76,11 +77,12 @@ class UsersValidator extends Validator{
                 update:[
                     check('phoneNumber')
                         .trim()
-                        .optional()
-                        .matches(/^[0-9 +]+$/)
-                        .withMessage("Invalid Phone number")
+                        .notEmpty()
+                        .withMessage("phone number is required")
                         .isLength({min:10,max:10})
-                        .withMessage('Phone no must be 10 digits'),
+                        .withMessage('Phone no must be 10 digits')
+                        .matches(/^[6-9]\d{9}$/)
+                        .withMessage("Invalid Phone number"),
                     check('email')
                         .trim()
                         .optional()

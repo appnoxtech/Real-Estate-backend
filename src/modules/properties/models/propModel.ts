@@ -73,7 +73,7 @@ const Properties = databaseInstance.define('properties', {
     lookingTo: {
       type: DataTypes.ENUM,
       allowNull: false,
-    values: ['Buy', 'Rent/Lease','PG']
+    values: ['Sell', 'Rent/Lease','PG']
     },
     furnishedStatus: {
       type: DataTypes.ENUM,

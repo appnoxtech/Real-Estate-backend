@@ -10,6 +10,7 @@ class PropertiesValidator extends Validator{
                 create:[
                     check('title').trim().notEmpty().withMessage("Title is required"),
                     check('userId').trim().notEmpty().withMessage("userId is required"),
+                    check('type').trim().notEmpty().withMessage("type is required").isIn(['Commercial-property','Residential-property']).withMessage("type should be ['Commercial-property','Residential-property']"),
                     check('propertyType').trim().notEmpty().withMessage("propertyType is required"),
                     check('description').trim().notEmpty().withMessage("description is required"),
                     check('area').trim().notEmpty().withMessage("area is required"),
@@ -23,7 +24,7 @@ class PropertiesValidator extends Validator{
                     check('ownerPhoneNumber').trim().notEmpty().withMessage("ownerPhoneNumber is required").matches(/^[6-9]\d{9}$/).withMessage("invalid Phone number"),
                     check('propertyOnFloor').trim().notEmpty().withMessage("propertyOnFloor is required"),
                     check('totalFloor').trim().notEmpty().withMessage("totalFloor is required"),
-                   // check('userId').trim().notEmpty().withMessage("userId is required"),
+                    
                     
                     
                 ],

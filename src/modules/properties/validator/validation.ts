@@ -39,7 +39,7 @@ class PropertiesValidator extends Validator{
                     check('ownerPhoneNumber').trim().optional().matches(/^[6-9]\d{9}$/).withMessage("invalid Phone number"),
                     check('parking').trim().optional().isIn(['Yes','No']).withMessage("should be ['Yes','No']"),
                     check('furnishedStatus').trim().optional().isIn(['unfurnished', 'semi-furnished', 'fully-furnished']).withMessage("furnishedStatus should be ['unfurnished', 'semi-furnished', 'fully-furnished']"),
-                    check("lookingTo").trim().optional().isIn(['Buy', 'Rent/Lease','PG']).withMessage("lokingTo should be ['Buy', 'Rent/Lease','PG']"),
+                    check("lookingTo").trim().optional().isIn(['Sell', 'Rent/Lease','PG']).withMessage("lokingTo should be ['Sell', 'Rent/Lease','PG']"),
                 ]
             }
         )

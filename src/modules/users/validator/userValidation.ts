@@ -75,13 +75,13 @@ class UsersValidator extends Validator{
                           
                 ],
                 update:[
-                    check('phoneNumber')
-                        .trim()
-                        .optional()
-                        .isLength({min:10,max:10})
-                        .withMessage('Phone no must be 10 digits')
-                        .matches(/^[6-9]\d{9}$/)
-                        .withMessage("Invalid Phone number"),
+                    // check('phoneNumber')
+                    //     .trim()
+                    //     .optional()
+                    //     .isLength({min:10,max:10})
+                    //     .withMessage('Phone no must be 10 digits')
+                    //     .matches(/^[6-9]\d{9}$/)
+                    //     .withMessage("Invalid Phone number"),
                     check('email')
                         .trim()
                         .optional()

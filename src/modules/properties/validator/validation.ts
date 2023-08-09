@@ -17,7 +17,7 @@ class PropertiesValidator extends Validator{
                     check('price').trim().notEmpty().withMessage("price is required"),
                     check('bhk').trim().notEmpty().withMessage("bhk is required"),
                     check('status').trim().notEmpty().withMessage("status is required").isIn(['readyToMove','underConstruction']).withMessage("status should be ['readyToMove','underConstruction']"),
-                    check("lookingTo").trim().notEmpty().withMessage("lookingTo is required").isIn(['Buy', 'Rent/Lease','PG']).withMessage("lokingTo should be ['Buy', 'Rent/Lease','PG']"),
+                    check("lookingTo").trim().notEmpty().withMessage("lookingTo is required").isIn(['Sell', 'Rent/Lease','PG']).withMessage("lokingTo should be ['Buy', 'Rent/Lease','PG']"),
                     check('furnishedStatus').trim().notEmpty().withMessage("furnishedStatus is required").isIn(['unfurnished', 'semi-furnished', 'fully-furnished']).withMessage("furnishedStatus should be ['unfurnished', 'semi-furnished', 'fully-furnished']"),
                     check('parking').trim().optional().isIn(['Yes','No']).withMessage("should be ['Yes','No']"),
                     check('ownerName').trim().notEmpty().withMessage("ownerName is required"),

@@ -19,7 +19,9 @@ class Server {
     this.expressInstance.use(compression());
 
     // Setup Cross Origin access
-    this.expressInstance.use(cors());
+    this.expressInstance.use(cors({
+      methods:['GET', 'POST', 'PUT', 'DELETE']
+    }));
 
     // Setup requests format parsing (Only JSON requests will be valid)
     this.expressInstance.use(bodyParser.urlencoded({ extended: true }));

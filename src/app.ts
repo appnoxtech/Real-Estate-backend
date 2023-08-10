@@ -25,6 +25,7 @@ const io = new Server(server, {
     methods: ["GET", "POST","DELETE"],
     credentials:true
   },
+  
 });
 
 var name: String;

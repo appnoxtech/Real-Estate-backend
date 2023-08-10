@@ -22,6 +22,8 @@ const server = http.createServer(expressInstance);
 const io = new Server(server, {
   cors: {
     origin: "*",
+    methods: ["GET", "POST","DELETE"],
+    credentials:true,
   },
   
 });

@@ -18,12 +18,12 @@ class Server {
     // Setup requests gZip compression
     this.expressInstance.use(compression());
 
-    const options = {
-      origin: "*",
-      methods: "GET,POST,DELETE,PATCH,PUT",
-      credentials: true,
-    };
-    this.expressInstance.use(cors(options));
+    // const options = {
+    //   origin: "*",
+    //   methods: "GET,POST,DELETE,PATCH,PUT",
+    //   credentials: true,
+    // };
+    this.expressInstance.use(cors());
     // // Setup Cross Origin access
     // this.expressInstance.use(cors({
     //   methods:['GET', 'POST', 'PUT', 'DELETE']

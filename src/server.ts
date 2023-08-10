@@ -24,6 +24,7 @@ class Server {
     //   credentials: false,
     // };
     this.expressInstance.use(cors());
+    this.expressInstance.options("*", cors());
     // // Setup Cross Origin access
     // this.expressInstance.use(cors({
     //   methods:['GET', 'POST', 'PUT', 'DELETE']

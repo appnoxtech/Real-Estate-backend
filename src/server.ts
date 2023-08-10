@@ -23,7 +23,10 @@ class Server {
     //   methods: "GET,POST,DELETE,PATCH,PUT",
     //   credentials: true,
     // };
-    this.expressInstance.use(cors());
+    const options = {
+      origin: "*"
+    };
+    this.expressInstance.use(cors(options));
     // // Setup Cross Origin access
     // this.expressInstance.use(cors({
     //   methods:['GET', 'POST', 'PUT', 'DELETE']

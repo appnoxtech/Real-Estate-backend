@@ -21,12 +21,11 @@ const server = http.createServer(expressInstance);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST","DELETE"],
     credentials:true
   },
 });
-console.log("hellllo",io)
 
 var name: String;
 // Listen for when the client connects via socket.io-client

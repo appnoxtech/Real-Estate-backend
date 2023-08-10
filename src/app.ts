@@ -23,8 +23,10 @@ const io = new Server(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST","DELETE"],
+    credentials:true
   },
 });
+console.log("hellllo",io)
 
 var name: String;
 // Listen for when the client connects via socket.io-client

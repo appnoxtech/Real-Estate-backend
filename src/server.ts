@@ -19,7 +19,7 @@ class Server {
     this.expressInstance.use(compression());
 
     const options = {
-      origin: "https://realstate.appnox.website",
+      origin: "*",
       methods: "GET,POST,DELETE,PATCH,PUT",
       credentials: true,
     };

@@ -21,7 +21,7 @@ const server = http.createServer(expressInstance);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: ["https://realstate.appnox.website"],
     methods: ["GET", "POST","DELETE"],
   },
 });

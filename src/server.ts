@@ -12,6 +12,7 @@ class Server {
     this.expressInstance = express();
     this.middlewareSetup();
     this.routingSetup();
+    this.expressInstance.use(cors());
   }
 
   private middlewareSetup(): void {
@@ -23,7 +24,7 @@ class Server {
     //   methods: "GET,POST,DELETE,PATCH,PUT",
     //   credentials: false,
     // };
-    this.expressInstance.use(cors());
+   // this.expressInstance.use(cors());
     // // Setup Cross Origin access
     // this.expressInstance.use(cors({
     //   methods:['GET', 'POST', 'PUT', 'DELETE']

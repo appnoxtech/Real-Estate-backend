@@ -22,7 +22,7 @@ const server = http.createServer(expressInstance);
 const io = new Server(server,
                      {
   cors: {
-    origin: "*",
+    origin: "https://main.d3r82s2qjrqjua.amplifyapp.com",
     methods: ["GET", "POST","DELETE"],
     credentials:true,
   },

@@ -45,6 +45,10 @@ export class PropertyController {
 
     async deleteProperty(req: Request, res: Response, next: NextFunction) {
         try {
+            //set cors headers 
+
+            res.header('Access-Control-Allow-Methods','GET, POST, OPTIONS, PUT, DELETE');
+            res.header('Access-Control-Allow-Headers', 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,x-auth-token');
             const data = await PropertyServiceInstance.deleteProperty(req);
             respHndlr.sendSuccess(res, RESPONSE_STATUS.SUCCESS);
         } catch (err: any) {

@@ -12,12 +12,12 @@ class Server {
     this.expressInstance = express();
     this.middlewareSetup();
     this.routingSetup();
-    this.expressInstance.use(cors());
   }
 
-  private middlewareSetup(): void {
+  public middlewareSetup(): void {
     // Setup requests gZip compression
     this.expressInstance.use(compression());
+    this.expressInstance.use(cors());
 
     // const options = {
     //   origin: "*",
@@ -35,7 +35,7 @@ class Server {
     this.expressInstance.use(bodyParser.json());
   }
 
-  private routingSetup() {
+  public routingSetup() {
     // Add mainRouter object to server routes
     this.expressInstance.use("/", mainRouter);
   }

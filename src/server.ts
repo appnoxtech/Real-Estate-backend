@@ -17,19 +17,9 @@ class Server {
   public middlewareSetup(): void {
     // Setup requests gZip compression
     this.expressInstance.use(compression());
-    this.expressInstance.use(cors());
-
-    // const options = {
-    //   origin: "*",
-    //   methods: "GET,POST,DELETE,PATCH,PUT",
-    //   credentials: false,
-    // };
-   // this.expressInstance.use(cors());
-    // // Setup Cross Origin access
-    // this.expressInstance.use(cors({
-    //   methods:['GET', 'POST', 'PUT', 'DELETE']
-    // }));
-
+    this.expressInstance.use(cors({
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    }));
     // Setup requests format parsing (Only JSON requests will be valid)
     this.expressInstance.use(bodyParser.urlencoded({ extended: true }));
     this.expressInstance.use(bodyParser.json());

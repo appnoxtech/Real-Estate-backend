@@ -41,6 +41,10 @@ class MainRouter {
             .get(this.property.getCities)     
             this.router.route(`/api/v1/propertyType/:type`)
             .get(this.property.propertyType) 
+            this.router.route(`/api/v1/randomProperty`)
+            .get(this.property.randomProperty)
+            this.router.route(`/api/v1/amenties`)
+            .get(this.property.getAllAmenties)
 
         }catch(err:any){
             logger.error("error occur in access routes",err)

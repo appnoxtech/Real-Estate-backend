@@ -16,6 +16,9 @@ const State = require('country-state-city').State;
 const City = require('country-state-city').City;
 import PropertiesType from '../models/propertyTypeModel'
 import User from "../../users/model/userModel";
+import sequelize from "sequelize";
+import amenties from "../models/amenties";
+
 
 
 const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
@@ -191,5 +194,29 @@ export class PropertyService {
       throw new Exception(ERROR_TYPE.NOT_FOUND, "No DATA Found")
     }
     return data
+  }
+
+  
+  async randomProperty(req: any) {
+    try {
+      let fetchData = await Properties.findAll({
+        order: sequelize.literal('RAND()'),
+        limit: 8
+      });
+      let result ={
+        count :fetchData.length,
+        Data:fetchData
+      }
+      return result
+    } catch (err: any) {
+      logger.error("Errror in fetch data ", err);
+    }
+  }
+
+  async getAllAmenties(req:any){
+    let data = await amenties.findAll({
+      attributes:['name']
+    })
+    return Promise.resolve(data)
   }
 }

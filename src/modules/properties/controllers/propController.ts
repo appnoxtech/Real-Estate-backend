@@ -108,5 +108,23 @@ export class PropertyController {
         }
     }
 
+    async randomProperty(req: Request, res: Response,next:NextFunction) {
+        try {
+            const data = await PropertyServiceInstance.randomProperty(req);
+            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        }
+    }
+
+    async getAllAmenties(req: Request, res: Response, next: NextFunction) {
+        try {
+            const data = await PropertyServiceInstance.getAllAmenties(req);
+            respHndlr.sendSuccess(res, data, RESPONSE_STATUS.SUCCESS);
+        } catch (err: any) {
+            respHndlr.sendError(res, err);
+        }
+    }
+
 }
 

@@ -36,14 +36,21 @@ const Properties = databaseInstance.define('properties', {
       allowNull: false,
     defaultValue:[]
     },
-    location: {
-      type: DataTypes.JSON,
-      allowNull: false,
-    defaultValue:[]
-    },
     area: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    street: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     type: {
       type: DataTypes.ENUM,

@@ -202,7 +202,7 @@ export class UserService {
       // Matching OTP
       if (!verifyOtp) {
         throw new Exception(
-            ERROR_TYPE.BAD_REQUEST,'Otp Is Invalid');
+            ERROR_TYPE.BAD_REQUEST,'OTP Is Invalid');
       }
 
       const userExist = await User.findOne({

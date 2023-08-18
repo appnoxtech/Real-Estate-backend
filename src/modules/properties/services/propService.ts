@@ -36,11 +36,6 @@ export class PropertyService {
 
   async registerProperty(req: any, res: any) {
     try {
-      const { title } = req.body
-      const alreadyExist = await Properties.findOne({ where: { title: title } })
-      if (alreadyExist) {
-        throw new Exception(ERROR_TYPE.ALREADY_EXISTS, 'property already exist with this title.')
-      }
       let usersId = await User.findOne({
         where: {
           id: req.body.userId
@@ -68,7 +63,7 @@ export class PropertyService {
 
       }
       const propertyUpdated = await Properties.update(req.body, { where: { id: id } })
-      return Promise.resolve(propertyUpdated);
+      return Promise.resolve('Property updated successfully');
     } catch (err: any) {
       return Promise.reject(err);
     }
@@ -111,10 +106,10 @@ export class PropertyService {
       let { status, title, sortBy, sortOrder, search } = req.query;
       let query = paginator(req.query, ['title', 'location', 'price', 'type']);
       if (sortBy === undefined) {
-        sortBy = 'title';
+        sortBy = 'createdAt';
       }
       if (sortOrder === undefined) {
-        sortOrder = 'ASC';
+        sortOrder = 'DESC';
       }
       query.order = [[String(sortBy), String(sortOrder)]];
       let where = {};
@@ -139,7 +134,7 @@ export class PropertyService {
   }
   async search(req: any) {
     try {
-      let { type, location, price, lookingTo, readyToMove } = req.query;
+      let { type,state,city,furnishedStatus,lookingTo,price,bhk} = req.query;
       let listings = await Properties.findAll({
         where: { ...req.query }
       });
@@ -157,9 +152,6 @@ export class PropertyService {
         userId: req.params.userId
       }
     })
-    if (data.length == 0) {
-      throw new Exception(ERROR_TYPE.NOT_FOUND, "Property not found for this userId")
-    }
     return Promise.resolve(data)
 
   }

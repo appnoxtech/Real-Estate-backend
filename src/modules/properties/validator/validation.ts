@@ -14,6 +14,7 @@ class PropertiesValidator extends Validator{
                     check('propertyType').trim().notEmpty().withMessage("propertyType is required"),
                     check('description').trim().notEmpty().withMessage("description is required"),
                     check('area').trim().notEmpty().withMessage("area is required"),
+                    check('state').trim().notEmpty().withMessage("state is required"),
                     check('price').trim().notEmpty().withMessage("price is required"),
                     check('bhk').trim().notEmpty().withMessage("bhk is required"),
                     check('status').trim().notEmpty().withMessage("status is required").isIn(['readyToMove','underConstruction']).withMessage("status should be ['readyToMove','underConstruction']"),

@@ -4,11 +4,20 @@ import favouriteProperty from "../model/favourite";
 import Exception from "../../../exceptions/exception";
 import { logger } from "../../../utils/logger";
 import { ERROR_TYPE, RESPONSE_STATUS } from "../../../utils/constants";
+import User from "../../users/model/userModel";
 
 export class favouriteService {
   //post favourite property
   async postFavouriteProperty(req: any, res: any) {
     try {
+      
+      // let token_part = req.headers.authorization.split(" ")[1]
+      // let data = await User.findOne({
+      //   where:{
+      //     token:token_part
+      //   }
+      // })
+      // let userId = data?.dataValues.id
       // Check if the property exists
       const propertyCheck = await Properties.findOne({
         where: {
@@ -34,7 +43,7 @@ export class favouriteService {
       } else {
         throw new Exception(
           ERROR_TYPE.NOT_FOUND,
-          "property not found in property"
+          "property not exist "
         );
       }
     } catch (err) {

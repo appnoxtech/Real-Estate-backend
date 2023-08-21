@@ -47,6 +47,15 @@ export class PropertyService {
       if (!usersId) {
         throw new Exception(ERROR_TYPE.NOT_FOUND, "userId is not exist in user Database")
       }
+      if(req.body?.ownerPhoneNumber != usersId.dataValues?.phoneNumber){
+         throw new Exception(ERROR_TYPE.NOT_FOUND,"Provide correct phoneNumber which was connect by userId")
+      }
+      if(req.body?.ownerName != usersId.dataValues?.name){
+        throw new Exception(ERROR_TYPE.NOT_FOUND,"Provide correct name which was connect by userId")
+     }
+      if(req.body.totalFloor < req.body.propertyOnFloor){
+        throw new Exception(ERROR_TYPE.NOT_ALLOWED,"totalfloor cannot be lessThan propertyOnFloor")
+      }
       const propertyCreate = await Properties.create(req.body)
       return Promise.resolve(propertyCreate);
     } catch (err: any) {
@@ -65,6 +74,23 @@ export class PropertyService {
         throw new Exception(ERROR_TYPE.NOT_FOUND, 'property not exist, So we can not update the property details ')
 
       }
+      let usersId = await User.findOne({
+        where: {
+          id: req.body.userId
+        }
+      })
+      if (!usersId) {
+        throw new Exception(ERROR_TYPE.NOT_FOUND, "userId is not exist in user Database")
+      }
+     if(req.body.totalFloor < req.body.propertyOnFloor){
+       throw new Exception(ERROR_TYPE.NOT_ALLOWED,"totalfloor cannot be lessThan propertyOnFloor")
+     }
+     if (req.body?.ownerPhoneNumber && req.body.ownerPhoneNumber !== Exist?.dataValues?.ownerPhoneNumber) {
+      throw new Exception(ERROR_TYPE.BAD_REQUEST, 'ownerPhoneNumber cannot be updated');
+     }
+     if (req.body?.ownerName && req.body.ownerName !== Exist?.dataValues?.ownerName) {
+    throw new Exception(ERROR_TYPE.BAD_REQUEST, 'ownerName cannot be updated');
+     }
       const propertyUpdated = await Properties.update(req.body, { where: { id: id } })
       return Promise.resolve('Property updated successfully');
     } catch (err: any) {
@@ -137,7 +163,7 @@ export class PropertyService {
   }
   async search(req: any) {
     try {
-      let { type,state,city,furnishedStatus,lookingTo,price,bhk} = req.query;
+      let { type,state,city,furnishedStatus,lookingTo,price,bhk,status} = req.query;
       let listings = await Properties.findAll({
         where: { ...req.query }
       });

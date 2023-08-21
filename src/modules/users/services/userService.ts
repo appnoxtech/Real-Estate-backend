@@ -191,7 +191,14 @@ export class UserService {
       if(!otp){
         throw new Exception(ERROR_TYPE.BAD_REQUEST,'please provide otp for verification')
       }
-
+      const checkPhoneNo = await User.findOne({
+        where:{
+          phoneNumber:phoneNumber
+        }
+      })
+      if(checkPhoneNo == null){
+        throw new Exception(ERROR_TYPE.NOT_FOUND,"phoneNumber is not registered")
+      }
       const verifyOtp = await Otp.findOne({
         where: {
             phoneNumber:phoneNumber,

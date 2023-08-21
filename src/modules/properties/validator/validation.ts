@@ -23,8 +23,8 @@ class PropertiesValidator extends Validator{
                     check('parking').trim().optional().isIn(['Yes','No']).withMessage("should be ['Yes','No']"),
                     check('ownerName').trim().notEmpty().withMessage("ownerName is required"),
                     check('ownerPhoneNumber').trim().notEmpty().withMessage("ownerPhoneNumber is required").matches(/^[6-9]\d{9}$/).withMessage("invalid Phone number"),
-                    check('propertyOnFloor').trim().notEmpty().withMessage("propertyOnFloor is required"),
-                    check('totalFloor').trim().notEmpty().withMessage("totalFloor is required"),
+                    check('propertyOnFloor').trim().notEmpty().withMessage("propertyOnFloor is required").isNumeric().withMessage("propertyOnFloor always in integerType"),
+                    check('totalFloor').trim().notEmpty().withMessage("totalFloor is required").isNumeric().withMessage("totalFloor always in integerType"),
                     
                     
                     
@@ -41,6 +41,9 @@ class PropertiesValidator extends Validator{
                     check('parking').trim().optional().isIn(['Yes','No']).withMessage("should be ['Yes','No']"),
                     check('furnishedStatus').trim().optional().isIn(['unfurnished', 'semi-furnished', 'fully-furnished']).withMessage("furnishedStatus should be ['unfurnished', 'semi-furnished', 'fully-furnished']"),
                     check("lookingTo").trim().optional().isIn(['Sell', 'Rent/Lease','PG']).withMessage("lokingTo should be ['Sell', 'Rent/Lease','PG']"),
+                    check('propertyOnFloor').trim().optional().isNumeric().withMessage("propertyOnFloor always in integerType"),
+                    check('totalFloor').trim().optional().isNumeric().withMessage("totalFloor always in integerType"),
+                    check('type').trim().optional().isIn(['Commercial-property','Residential-property']).withMessage("type should be ['Commercial-property','Residential-property']"),
                 ]
             }
         )

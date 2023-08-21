@@ -13,18 +13,18 @@ export class Validation {
   constructor() {}
   async checkValidation(request: any, res: Response, next: NextFunction) {
     try {
-      if (request.headers["service-token"]) {
-        try {
-          let token = request.headers["service-token"];
-          let verirfyToken: any = verify(token?.toString(), SERVICE_SECRET);
-          if (verirfyToken) {
-            return next();
-          }
-          logger.error("Failed to verify service token");
-        } catch (err: any) {
-          logger.error(err);
-        }
-      }
+      // if (request.headers["service-token"]) {
+      //   try {
+      //     let token = request.headers["service-token"];
+      //     let verirfyToken: any = verify(token?.toString(), SERVICE_SECRET);
+      //     if (verirfyToken) {
+      //       return next();
+      //     }
+      //     logger.error("Failed to verify service token");
+      //   } catch (err: any) {
+      //     logger.error(err);
+      //   }
+      // }
       if (request.headers["authorization"]) {
         let accToken = request.headers["authorization"];
         const token = accToken.split(" ");
@@ -41,6 +41,8 @@ export class Validation {
           throw new Exception(ERROR_TYPE.NOT_FOUND, "Invalid Token");
         }
         return next();
+      }else{
+        throw new Exception(ERROR_TYPE.NOT_ALLOWED,"Please provide token::")
       }
     } catch (err) {
       respHndlr.sendError(res, err);

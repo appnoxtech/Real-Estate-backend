@@ -6,6 +6,7 @@ import fileUploadRoutes from './modules/documentsUpload/routes/documentsUpload';
 import ratingRoutes from './modules/ratings/routes/ratingRoutes'
 import terms_routes from './modules/responses/routes/terms_routes';
 import feedback_routes from './modules/responses/routes/feedback_routes';
+import favouriteRoutes from './modules/favourite_property/routes/favouriteRoutes';
 
 const mainRouter = Router()
 
@@ -19,5 +20,6 @@ mainRouter.use(fileUploadRoutes)
 mainRouter.use(ratingRoutes)
 mainRouter.use(terms_routes)
 mainRouter.use(feedback_routes)
+mainRouter.use(favouriteRoutes)
 
 export default mainRouter

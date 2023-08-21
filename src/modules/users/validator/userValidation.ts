@@ -25,7 +25,7 @@ class UsersValidator extends Validator{
                         .trim()
                         .notEmpty()
                         .withMessage("email is required")
-                        .matches(/^[a-zA-Z0-9._%+-]+@gmail\.com$/)
+                        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
                         .withMessage('Invalid email address'),
                     ],  
                     

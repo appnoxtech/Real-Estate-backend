@@ -163,7 +163,7 @@ export class PropertyService {
   }
   async search(req: any) {
     try {
-      let { type,state,city,furnishedStatus,lookingTo,price,bhk,status} = req.query;
+      let { type,state,city,furnishedStatus,lookingTo,price,bhk,status,parking} = req.query;
       let listings = await Properties.findAll({
         where: { ...req.query }
       });

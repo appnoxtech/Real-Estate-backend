@@ -2,7 +2,12 @@ import { Validator} from "../../../middleware/Validator/validator"
 import {check} from 'express-validator'
 
 
-
+const isPositiveInteger = (value:any) => {
+    if (!Number.isInteger(value) || value <= 0) {
+        throw new Error('totalFloor must be a positive integer');
+    }
+    return true;
+};
 class PropertiesValidator extends Validator{
     constructor(){
         super(
@@ -24,7 +29,8 @@ class PropertiesValidator extends Validator{
                     check('ownerName').trim().notEmpty().withMessage("ownerName is required"),
                     check('ownerPhoneNumber').trim().notEmpty().withMessage("ownerPhoneNumber is required").matches(/^[6-9]\d{9}$/).withMessage("invalid Phone number"),
                     check('propertyOnFloor').trim().notEmpty().withMessage("propertyOnFloor is required").isNumeric().withMessage("propertyOnFloor always in integerType"),
-                    check('totalFloor').trim().notEmpty().withMessage("totalFloor is required").isNumeric().withMessage("totalFloor always in integerType"),
+                    //check('totalFloor').trim().notEmpty().withMessage("totalFloor is required").isNumeric().withMessage("totalFloor always in integerType"),
+                    check('totalFloor').trim().notEmpty().withMessage("totalFloor is required").custom(value => isPositiveInteger(Number(value))),
                     
                     
                     

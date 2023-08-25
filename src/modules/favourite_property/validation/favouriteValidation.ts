@@ -9,7 +9,7 @@ class FavouriteValidator extends Validator{
             {
                 create:[
                     check('propertyId').trim().notEmpty().withMessage("propertyId is required").isUUID().withMessage("Id should be uuid"),
-                    check('status').trim().notEmpty().withMessage("status is required").isIn(["L"]).withMessage("should always be Like [L] ")
+                    check('status').trim().notEmpty().withMessage("status is required").isIn(['L','D']).withMessage("should always be Like [L] and Dislike [D]")
                 ],
             }
         )

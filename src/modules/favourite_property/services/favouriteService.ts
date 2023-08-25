@@ -8,43 +8,67 @@ import User from "../../users/model/userModel";
 
 export class favouriteService {
   //post favourite property
+  // async postFavouriteProperty(req: any, res: any) {
+  //   try {
+  //     const {propertyId ,status} = req.body
+  //     const propertyCheck = await Properties.findOne({
+  //       where: {
+  //         id: propertyId,
+  //       },
+  //     });
+  //     if (propertyCheck) {
+  //      if(status == 'L'){
+  //       let createdData = await favouriteProperty.create(req.body)
+  //       return createdData
+  //      }else if(status == 'D'){
+  //       const deletedCount = await favouriteProperty.destroy({
+  //         where: {
+  //           propertyId:propertyId,
+  //           status:status
+  //          },
+  //       });
+  //       console.log("sdffsfsdf",deletedCount)
+  //      }
+  //     } else {
+  //       throw new Exception(
+  //         ERROR_TYPE.NOT_FOUND,
+  //         "property not exist "
+  //       );
+  //     }
+  //   } catch (err) {
+  //     return Promise.reject(err);
+  //   }
+  // }
   async postFavouriteProperty(req: any, res: any) {
     try {
-      
-      // let token_part = req.headers.authorization.split(" ")[1]
-      // let data = await User.findOne({
-      //   where:{
-      //     token:token_part
-      //   }
-      // })
-      // let userId = data?.dataValues.id
-      // Check if the property exists
+      const { propertyId, status } = req.body;
+
       const propertyCheck = await Properties.findOne({
         where: {
-          id: req.body.propertyId,
+          id: propertyId,
         },
       });
+
       if (propertyCheck) {
-        let checkExistData = await favouriteProperty.findOne({
-          where: {
-            propertyId: req.body.propertyId,
-            status: "L",
-          },
-          raw: true,
-        });
-        if (checkExistData) {
-          throw new Exception(
-            ERROR_TYPE.ALREADY_EXISTS,
-            "this property is already in liked model"
-          );
+        if (status === "L") {
+          let createdData = await favouriteProperty.create(req.body);
+          return createdData;
+        } else if (status === "D") {
+          const deletedCount = await favouriteProperty.destroy({
+            where: {
+              propertyId: propertyId,
+            },
+            force: true,
+          });
+
+          if (deletedCount > 0) {
+            return "Property removed successfully";
+          } else {
+            throw new Exception(ERROR_TYPE.NOT_FOUND,"Property not found in favourite")
+          }
         }
-        let createData = await favouriteProperty.create(req.body);
-        return createData;
       } else {
-        throw new Exception(
-          ERROR_TYPE.NOT_FOUND,
-          "property not exist "
-        );
+        throw new Exception(ERROR_TYPE.NOT_FOUND,"Property not found");
       }
     } catch (err) {
       return Promise.reject(err);

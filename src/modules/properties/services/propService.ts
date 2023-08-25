@@ -65,7 +65,8 @@ export class PropertyService {
 
   async updatePropertyDetails(req: any) {
     try {
-      const title = req.body?.title
+      // const title = req.body?.title
+
       const id = req.params.id
 
       const Exist = await Properties.findOne({ where: { id: id } })
@@ -76,19 +77,19 @@ export class PropertyService {
       }
       let usersId = await User.findOne({
         where: {
-          id: req.body.userId
+          id: Exist.dataValues.userId
         }
       })
       if (!usersId) {
         throw new Exception(ERROR_TYPE.NOT_FOUND, "userId is not exist in user Database")
       }
-     if(req.body.totalFloor < req.body.propertyOnFloor){
+     if(req.body?.totalFloor < req.body?.propertyOnFloor){
        throw new Exception(ERROR_TYPE.NOT_ALLOWED,"totalfloor cannot be lessThan propertyOnFloor")
      }
-     if (req.body?.ownerPhoneNumber && req.body.ownerPhoneNumber !== Exist?.dataValues?.ownerPhoneNumber) {
+     if (req.body?.ownerPhoneNumber && req.body?.ownerPhoneNumber !== Exist?.dataValues?.ownerPhoneNumber) {
       throw new Exception(ERROR_TYPE.BAD_REQUEST, 'ownerPhoneNumber cannot be updated');
      }
-     if (req.body?.ownerName && req.body.ownerName !== Exist?.dataValues?.ownerName) {
+     if (req.body?.ownerName && req.body?.ownerName !== Exist?.dataValues?.ownerName) {
     throw new Exception(ERROR_TYPE.BAD_REQUEST, 'ownerName cannot be updated');
      }
       const propertyUpdated = await Properties.update(req.body, { where: { id: id } })

@@ -2,8 +2,7 @@ import { Validator} from "../../../middleware/Validator/validator"
 import {check} from 'express-validator'
 
 
-
-class FavouriteValidator extends Validator{
+export class FavouriteValidator extends Validator{
     constructor(){
         super(
             {
@@ -15,4 +14,4 @@ class FavouriteValidator extends Validator{
         )
     }
 }
-export let chatValidator = new FavouriteValidator() 
+export let favValidator = new FavouriteValidator() 

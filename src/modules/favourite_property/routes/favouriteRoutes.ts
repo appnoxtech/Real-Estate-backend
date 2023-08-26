@@ -2,7 +2,7 @@ import { Router } from "express";
 import { FavouriteController } from "../controller/favourite";
 import { Validation } from "../../../middleware/authValidator";
 import { logger } from "../../../utils/logger";
-//import {propertiesValidator} from '../validator/validation'
+import { favValidator} from '../validation/favouriteValidation'
 
 
 class MainRouter {
@@ -20,11 +20,11 @@ class MainRouter {
     FavouriteRouters() {
         try{
         this.router.route(`/api/v1/favProperty`)
-            .post(this.validation.checkValidation,this.Favourite.postfavouriteProperty)
+            .post(this.validation.checkValidation,favValidator.makeValidation('create'),this.Favourite.postfavouriteProperty)
         this.router.route(`/api/v1/favProperty`)
-            .get(this.Favourite.getfavouriteProperty)    
+            .get(this.validation.checkValidation,this.Favourite.getfavouriteProperty)    
         this.router.route(`/api/v1/favProperty/:id`)
-            .delete(this.Favourite.removefavouriteProperty)    
+            .delete(this.validation.checkValidation,this.Favourite.removefavouriteProperty)    
        
         }catch(err:any){
             logger.error("error occur in access routes",err)

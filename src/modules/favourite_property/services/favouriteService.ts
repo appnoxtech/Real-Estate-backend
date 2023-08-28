@@ -57,8 +57,18 @@ export class favouriteService {
 
   async getfavouriteProperty(req: any, res: any) {
     try {
-      let fetchData = await favouriteProperty.findAndCountAll();
-      return Promise.resolve(fetchData);
+     let  fetchData = await favouriteProperty.findAndCountAll({
+      attributes:['id','status','propertyId'],
+      include:[
+        {
+          model:Properties,
+          attributes: ['title','propertyType','description','images','area','state','city','street','type','price','bhk','amenities','ownerPhoneNumber','ownerName','lookingTo','furnishedStatus','totalFloor','propertyOnFloor','ageOfProperty','parking',] 
+        }
+      ],
+      raw:true,
+      nest:true
+     })
+    return Promise.resolve(fetchData)
     } catch (err: any) {
       return Promise.reject(err);
     }
@@ -87,7 +97,7 @@ export class favouriteService {
       } else {
         throw new Exception(
           ERROR_TYPE.NOT_FOUND,
-          "propert not found in favorite"
+          "propert not found in favourite"
         );
       }
     } catch (err: any) {

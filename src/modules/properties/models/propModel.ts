@@ -1,6 +1,7 @@
 import database from '../../../config/db'
 import { DataTypes} from 'sequelize';
 import { UUID, UUIDV4, STRING, DATE } from 'sequelize';
+import favouriteProperty from '../../favourite_property/model/favourite';
 
 // Database connection instance
 const databaseInstance = database;
@@ -135,4 +136,11 @@ const Properties = databaseInstance.define('properties', {
     //   paranoid: true,
 });
 
+Properties.hasMany(favouriteProperty, {
+  foreignKey: 'propertyId'
+})
+
+favouriteProperty.belongsTo(Properties, {
+  foreignKey: 'propertyId'
+})
 export default Properties;

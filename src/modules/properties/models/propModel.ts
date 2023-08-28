@@ -67,8 +67,9 @@ const Properties = databaseInstance.define('properties', {
       allowNull: true,
     },
     amenities: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: true,
+      defaultValue:[]
     },
     ownerPhoneNumber: {
       type: DataTypes.STRING,

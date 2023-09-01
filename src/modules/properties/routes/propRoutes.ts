@@ -3,6 +3,10 @@ import { PropertyController } from "../controllers/propController";
 import { Validation } from "../../../middleware/authValidator";
 import { logger } from "../../../utils/logger";
 import {propertiesValidator} from '../validator/validation'
+import yaml from 'yamljs';
+import swaggerUi from 'swagger-ui-express';
+import path from 'path';
+import { propertySwaggerSpec } from "../../../utils/SwaggeerConfig";
 
 
 class MainRouter {
@@ -15,6 +19,7 @@ class MainRouter {
         this.validation = new Validation()
         this.router = Router()
         this.propertyRouters()
+        this.setupPropertySwagger();
     }
 
     propertyRouters() {
@@ -50,6 +55,15 @@ class MainRouter {
             logger.error("error occur in access routes",err)
         }
 
+    }
+    setupPropertySwagger(){
+        try{
+            const userSwaggerSpec = yaml.load(path.resolve(__dirname,  '../../../../swagger.yml'))
+            this.router.use('/api-docs-property',swaggerUi.serve);
+            this.router.get('/api-docs-propertyr',swaggerUi.setup(propertySwaggerSpec))
+        }catch(err:any){
+            logger.error("Error occured while loading swagger spec",err)
+        }
     }
 
 }

@@ -3,6 +3,10 @@ import { FavouriteController } from "../controller/favourite";
 import { Validation } from "../../../middleware/authValidator";
 import { logger } from "../../../utils/logger";
 import { favValidator} from '../validation/favouriteValidation'
+import yaml from 'yamljs'; 
+import swaggerUi from 'swagger-ui-express';
+import path from 'path';
+import { favouriteSwaggerSpec } from "../../../utils/SwaggeerConfig";
 
 
 class MainRouter {
@@ -30,6 +34,16 @@ class MainRouter {
             logger.error("error occur in access routes",err)
         }
 
+    }
+
+    setupfavouriteSwagger(){
+        try{
+            const userSwaggerSpec = yaml.load(path.resolve(__dirname,  '../../../../swagger.yml'))
+            this.router.use('/api-docs-favourite',swaggerUi.serve);
+            this.router.get('/api-docs-favourite',swaggerUi.setup(favouriteSwaggerSpec))
+         }catch(err:any){
+           logger.error("Error occured while loading swagger spec",err)
+         }
     }
 
 }

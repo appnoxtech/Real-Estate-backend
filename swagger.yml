@@ -1,0 +1,327 @@
+openapi: 3.0.0
+
+
+servers:  
+   - url: https://realstate.appnox.website:5000
+  
+
+paths:
+   /api/v1/user/create:
+       post:
+          summary: Create a new user.
+          desctiption: Endpoint to create a new user.
+          requestBody:
+              required: true  
+              content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/UserCreateInput'
+                     example:
+                        name: "appnoxai"
+                        profilePhoto: ""
+                        phoneNumber: "9980734434"
+                        email: "abc101@gmail.com"
+                        role: "agent"
+          responses:
+             '201':
+                descriptions: User created successfully.
+             '400':
+                descriptions: Invalid request payload. 
+
+
+   /api/v1/user/update/{userId}:
+      patch:
+        summary: Update user.
+        description: EndPoint to update user.
+        parameters:
+          - in: path
+            name: userId
+            required: true 
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdateInput'
+              example:
+                 name: "appnoxtech"
+        responses:
+          '200':
+             description: User updated successfully.
+          '400':
+             descriptions: Invalid request payload.
+
+
+   /api/v1/user/delete/{userId}:
+     delete:
+      summary: Delete user.
+      description: Endpoint to delete user.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted successfully.
+        '400':
+          description: Invalid request payload.
+
+   /api/v1/user/{userId}:
+     get:
+      summary: Get user by ID.
+      description: Endpoint to get user by ID.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User retrieved successfully.
+        '400':
+          description: Invalid request payload.
+
+   /api/v1/users:
+    get:
+      summary: Get all users.
+      description: Endpoint to get all users.
+      responses:
+        '200':
+          description: Users retrieved successfully.
+        '400':
+          description: Invalid request payload.
+
+   /api/v1/verify-otp:
+    post:
+      summary: Verify OTP.
+      description: Endpoint to verify OTP for user authentication.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOTPInput'
+            example:
+              phoneNumber: "7355312681"
+              otp: "2645"
+      responses:
+        '200':
+          description: OTP verified successfully.
+        '400':
+          description: Invalid request payload.       
+
+
+   /api/v1/logout:
+    post:
+      summary: Logout user.
+      description: Endpoint to logout user.
+      responses:
+        '200':
+          description: User logged out successfully.
+        '400':
+          description: Invalid request.     
+
+
+
+   /api/v1/property/create:
+      post:
+        summary: Create property.
+        description: Endpoint to post property
+        requestBody:
+          required: true   
+          content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/PropertyCreateInput'
+                     example:
+                        title: "Test data "
+                        userId: "ebc09e3b-aee4-4923-86b7-0ec59f0e7935"
+                        propertyType: ["Residential-property"]
+                        description: "Elegant penthouse with stunning views."
+                        images: ["image3.jpg", "image4.jpg"]
+                        area: "3000 sqft"
+                        state: "New York"
+                        city: "New York City"
+                        type: "Residential-property"
+                        price: "3000000"
+                        bhk: "4bhk"
+                        ownerPhoneNumber: "8765427488"
+                        ownerName: "Govind Singh"
+                        lookingTo: "Sell"
+                        furnishedStatus: "fully-furnished"
+                        propertyOnFloor: "8"
+                        ageOfProperty: "2 years"
+                        status: "readyToMove"
+                        parking: "Yes"
+          responses:
+             '201':
+                descriptions: property posted successfully.
+             '400':
+                descriptions: Invalid request payload. 
+
+   /api/v1/property/update/{id}:
+      patch:
+        summary: Update property.
+        description: EndPoint to update property.
+        parameters:
+          - in: path
+            name: propertyId
+            required: true 
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyUpdateInput'
+              example:
+                 description: "The Wonderful Society is a collaborative community that seeks to promote protective factors for emot"
+        responses:
+          '200':
+             description: property updated successfully.
+          '400':
+             descriptions: Invalid request payload.
+             
+
+   /api/v1/property/delete/{id}:
+     delete:
+      summary: Delete property.
+      description: Endpoint to delete property.
+      parameters:
+        - in: path
+          name: propertyId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: property deleted successfully.
+        '400':
+          description: Invalid request payload.
+
+   /api/v1/property/{propertyId}:
+     get:
+      summary: Get property by ID.
+      description: Endpoint to get property by ID.
+      parameters:
+        - in: path
+          name: propertyId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: property retrieved successfully.
+        '400':
+          description: Invalid request payload.
+     
+   /api/v1/properties:
+    get:
+      summary: Get all properties.
+      description: Endpoint to get all properties.
+      responses:
+        '200':
+          description: properties retrieved successfully.
+        '400':
+          description: Invalid request payload.
+
+
+   
+   /api/v1/country:
+    get:
+      summary: Get all countries.
+      description: Endpoint to get all countries.
+      responses:
+        '200':
+          description: countries retrieved successfully.
+        '400':
+          description: Invalid request payload.
+
+   /api/v1/stateByCountryCode:
+    get:
+      summary: Get stateByCountryCode
+      description: Endpoint to get stateByCountryCode.
+      parameters:
+        - name: countryCode
+          in: query
+          description: countryCode.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success.
+        '404':
+          description: No state found for this country code.
+
+   /api/v1/randomProperty:
+    get:
+      summary: Get property randomly.
+      description: Endpoint to get property randomly.
+      responses:
+        '200':
+          description: Success.
+        '404':
+          description: property not found.      
+
+   /api/v1/amenties:
+    get:
+      summary: Get amenties .
+      description: Endpoint to get amenties.
+      responses:
+        '200':
+          description: Success.
+        '404':
+          description: No data found.      
+
+   /api/v1/favProperty:
+      post:
+        summary: Add favourite property.
+        description: Endpoint to Add favourite
+        requestBody:
+          required: true   
+          content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/addFavourite'
+                     example:
+                        propertyId: "d82c3099-5619-4041-91eb-2f0310368981"
+                        status: "L"
+          responses:
+             '201':
+                descriptions: add property in favourites successfully.
+             '400':
+                descriptions: Invalid request payload. 
+
+   /api/v1/favProperty:
+    get:
+      summary: Get favProperty .
+      description: Endpoint to get favProperty.
+      responses:
+        '200':
+          description: Success.
+        '404':
+          description: No data found.        
+
+   /api/v1/favProperty/{id}:
+     delete:
+      summary: Delete favProperty.
+      description: Endpoint to delete favProperty.
+      parameters:
+        - in: path
+          name: propertyId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: property remove from favourite.
+        '400':
+          description: Invalid request payload.
+     

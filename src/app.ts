@@ -4,6 +4,8 @@ import connectPSQlDb from "./config/dbConnection";
 import { Server, Socket } from "socket.io";
 import { socketHandler } from "./utils/socketHandler";
 import { logger } from "./utils/logger";
+import swaggerSpec from "./utils/SwaggerSpec";
+import swaggerUi from 'swagger-ui-express'
 
 // Normalize port number which will expose server
 const port = normalizePort(5000);
@@ -16,6 +18,7 @@ expressInstance.set("port", port);
 expressInstance.get('/', (req, res) => {
   res.send('API Running');
 });
+expressInstance.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Create the HTTP Express Server
 const server = http.createServer(expressInstance);
 
@@ -28,7 +31,7 @@ const io = new Server(server,
   },
   
 }
-                     );
+);
 
 var name: String;
 // Listen for when the client connects via socket.io-client

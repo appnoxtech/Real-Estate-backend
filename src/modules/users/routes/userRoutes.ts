@@ -3,7 +3,10 @@ import { UserController } from "../controllers/userController";
 import { Validation } from "../../../middleware/authValidator";
 import { logger } from "../../../utils/logger";
 import { usersValidator } from "../validator/userValidation";
-
+import  userSwaggerSpec from "../../../utils/SwaggerSpec";
+import yaml from 'yamljs'; 
+import swaggerUi from 'swagger-ui-express';
+import path from 'path';
 
 class MainRouter {
 
@@ -15,6 +18,7 @@ class MainRouter {
         this.validation = new Validation()
         this.router = Router()
         this.userRouters()
+        this.setupUserSwagger();
     }
 
     userRouters() {
@@ -41,6 +45,15 @@ class MainRouter {
             logger.error("error occur in access routes",err)
         }
 
+    }
+    setupUserSwagger(){
+        try{
+           const userSwaggerSpec = yaml.load(path.resolve(__dirname,  '../../../../swagger.yml'))
+           this.router.use('/api-docs-user',swaggerUi.serve);
+           this.router.get('/api-docs-user',swaggerUi.setup(userSwaggerSpec))
+        }catch(err:any){
+          logger.error("Error occured while loading swagger spec",err)
+        }
     }
 
 }

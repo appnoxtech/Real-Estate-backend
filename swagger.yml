@@ -2,7 +2,7 @@ openapi: 3.0.0
 
 
 servers:  
-   - url: https://realstate.appnox.website:5000
+   - url: https://realstate.appnox.website
   
 
 paths:
